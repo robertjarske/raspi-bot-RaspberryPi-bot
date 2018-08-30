@@ -4,9 +4,29 @@ const request = require('supertest');
 const app = require('../server');
 const User = require('../models/User');
 
+const mockUsers = [{
+  email: 'rob@test.com',
+  name: 'robert',
+  username: 'rupert',
+  password: 'password',
+  admin: true
+}, {
+  email: 'andreas@test.com',
+  name: 'andreas',
+  username: 'andreas',
+  password: 'password'
+}, {
+  email: 'tom@test.com',
+  name: 'tom',
+  username: 'tom',
+  password: 'password'
+}];
+let token;
 
 beforeEach((done) => {
-  User.remove({}).then(() => done());
+  User.remove({}).then(() => {
+    return User.insertMany(mockUsers);  
+  }).then(() => done());
 });
 
 describe('POST auth/register', () => {
@@ -54,9 +74,53 @@ describe('POST auth/register', () => {
       if (err) return done(err);
 
       User.find().then((users) => {
-        expect(users.length).toBe(0);
+        expect(users.length).toBe(3);
         done();
       }).catch(e => done(e));
     })
   })
 });
+
+describe('POST /auth/login', () => {
+  it('should log in user', (done) => {
+    
+    request(app)
+    .post('/auth/login')
+    .send({email: mockUsers[0].email, password: mockUsers[0].password})
+    .expect(200)
+    .expect((res) => {
+      expect(res.body.token)
+    })
+    .end((err, res) => {
+      if (err) return done(err);
+      if (res)  return done();
+    })
+  })
+})
+
+describe('GET /users', () => {
+  it('should get all users if admin', (done) => {
+
+    request(app)
+    .post('/auth/login')
+    .send({email: mockUsers[0].email, password: mockUsers[0].password})
+    .expect(200)
+    .expect((res) => {
+      expect(res.body.token)
+      token = res.body.token;
+    })
+    .end(() => {
+      request(app)
+      .get('/users')
+      .set('x-access-token', token)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.users.length).toBe(3)
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        if (res) return done();
+      })
+    })
+  })
+})
