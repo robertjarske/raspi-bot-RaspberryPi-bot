@@ -28,21 +28,20 @@ router.post('/register', (req, res) => {
       password,
       avatar: `https://api.adorable.io/avatars/285/${name}@adorable.png`,
     },
-    (error, user) => {
-      if (error) {
-        if (error.code === 11000 || error.code === 11001) {
-          const dublicate = 'Seems we already have someone with that email';
-          return res.status(500).send({ authenticated: false, msg: dublicate });
-        }
-        return res.status(500).send({ authenticated: false, msg: error });
-      }
-
+  )
+    .then((user) => {
       const token = jwt.sign({ id: user._id }, SECRET.secret, {
         expiresIn: 86400,
       });
       return res.status(200).send({ authenticated: true, token });
-    },
-  );
+    })
+    .catch((error) => {
+      if (error.code === 11000 || error.code === 11001) {
+        const dublicate = 'Seems we already have someone with that email';
+        return res.status(500).send({ authenticated: false, msgType: 'danger', msg: dublicate });
+      }
+      return res.status(500).send({ authenticated: false, msg: error });
+    });
 });
 
 router.post('/login', (req, res) => {
@@ -59,7 +58,7 @@ router.post('/login', (req, res) => {
         });
       }
 
-      const isValidPassword = bcrypt.compareSync(password, user.password);
+      const isValidPassword = bcrypt.compare(password, user.password);
 
       if (!isValidPassword) {
         return res.status(401).send({
@@ -75,10 +74,18 @@ router.post('/login', (req, res) => {
         expiresIn: 86400,
       });
 
+
       return res.status(200).send({
         authenticated: true,
         token,
-        user,
+        user: {
+          _id: user._id,
+          admin: user.admin,
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          avatar: user.avatar,
+        },
         msgType: 'success',
         msg: 'Successfully Logged In',
       });
