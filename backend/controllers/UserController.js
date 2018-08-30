@@ -27,7 +27,7 @@ router.get('/:userId', tokenVerify, (req, res) => {
 
   return User.findOne({ _id: userId })
     .select('-password')
-    .then(userFound => res.status(200).send({ userFound }))
+    .then(userFound => res.status(200).send({ user: userFound }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -52,7 +52,7 @@ router.post('/', tokenVerify, (req, res) => {
     },
   )
     .select('-password')
-    .then(newUser => res.status(200).send({ msgType: 'success', msg: 'You successfully registered a new user', newUser }))
+    .then(newUser => res.status(200).send({ msgType: 'success', msg: 'You successfully registered a new user', user: newUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -68,7 +68,7 @@ router.put('/:userId', tokenVerify, (req, res) => {
   return User.findOneAndUpdate({ _id: userId },
     newUserdata,
     { new: true })
-    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully updated the user', updatedUser }))
+    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully updated the user', user: updatedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -83,7 +83,7 @@ router.put('/:userId/permissions', tokenVerify, (req, res) => {
   return User.findOneAndUpdate({ _id: userId },
     { admin: true },
     { new: true })
-    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully made user admin', updatedUser }))
+    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully made user admin', user: updatedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -96,7 +96,7 @@ router.delete('/:userId', tokenVerify, (req, res) => {
   if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOneAndDelete({ _id: userId })
-    .then(deletedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully removed user', deletedUser }))
+    .then(deletedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully removed user', user: deletedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 

@@ -22,6 +22,7 @@ const mockUsers = [{
   password: 'password'
 }];
 let token;
+let userId;
 
 beforeEach((done) => {
   User.remove({}).then(() => {
@@ -64,20 +65,20 @@ describe('POST auth/register', () => {
     }
 
     request(app)
-    .post('/auth/register')
-    .send(invalidNewUser)
-    .expect(500)
-    .expect((res) => {
-      expect(res.body.msg.errors.email.message).toBe('You need to register an email')
-    })
-    .end((err, res) => {
-      if (err) return done(err);
+      .post('/auth/register')
+      .send(invalidNewUser)
+      .expect(500)
+      .expect((res) => {
+        expect(res.body.msg.errors.email.message).toBe('You need to register an email')
+      })
+      .end((err, res) => {
+        if (err) return done(err);
 
-      User.find().then((users) => {
-        expect(users.length).toBe(3);
-        done();
-      }).catch(e => done(e));
-    })
+        User.find().then((users) => {
+          expect(users.length).toBe(3);
+          done();
+        }).catch(e => done(e));
+      })
   })
 });
 
@@ -85,16 +86,16 @@ describe('POST /auth/login', () => {
   it('should log in user', (done) => {
     
     request(app)
-    .post('/auth/login')
-    .send({email: mockUsers[0].email, password: mockUsers[0].password})
-    .expect(200)
-    .expect((res) => {
-      expect(res.body.token)
-    })
-    .end((err, res) => {
-      if (err) return done(err);
-      if (res)  return done();
-    })
+      .post('/auth/login')
+      .send({email: mockUsers[0].email, password: mockUsers[0].password})
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.token)
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+        done();
+      })
   })
 })
 
@@ -102,25 +103,62 @@ describe('GET /users', () => {
   it('should get all users if admin', (done) => {
 
     request(app)
-    .post('/auth/login')
-    .send({email: mockUsers[0].email, password: mockUsers[0].password})
-    .expect(200)
-    .expect((res) => {
-      expect(res.body.token)
-      token = res.body.token;
-    })
-    .end(() => {
-      request(app)
-      .get('/users')
-      .set('x-access-token', token)
+      .post('/auth/login')
+      .send({email: mockUsers[0].email, password: mockUsers[0].password})
       .expect(200)
       .expect((res) => {
-        expect(res.body.users.length).toBe(3)
+        expect(res.body.token)
+        token = res.body.token;
       })
-      .end((err, res) => {
-        if (err) return done(err);
-        if (res) return done();
+      .end(() => {
+        request(app)
+          .get('/users')
+          .set('x-access-token', token)
+          .expect(200)
+          .expect((res) => {
+            expect(res.body.users.length).toBe(3)
+          })
+          .end((err, res) => {
+            if (err) return done(err);
+            done();
+          })
       })
-    })
+  })
+})
+
+describe('GET /users/:id', () => {
+  it('should get user by id if admin', (done) => {
+
+    request(app)
+      .post('/auth/login')
+      .send({email: mockUsers[0].email, password: mockUsers[0].password})
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.token)
+        token = res.body.token;
+      })
+      .end(() => {
+        request(app)
+          .get('/users')
+          .set('x-access-token', token)
+          .expect(200)
+          .expect((res) => {
+            expect(res.body.users.length).toBe(3)
+            userId = res.body.users[0]._id
+          })
+          .end(() => {
+            request(app)
+              .get(`/users/${userId}`)
+              .set('x-access-token', token)
+              .expect(200)
+              .expect((res) => {
+                expect(res.body.user._id).toBe(userId)
+              })
+              .end((err, res) => {
+                if (err) return done(err);
+                done();
+              })
+          })
+      })
   })
 })
