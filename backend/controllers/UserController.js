@@ -11,7 +11,7 @@ router.use(bodyParser.json());
 /** Get all users */
 router.get('/', tokenVerify, (req, res) => {
   const { user } = req;
-  if (!user.admin) return res.status(404).send({ msg: 'You are not allowed to do that' });
+  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
   return User.find()
     .select('-password')
     .then(users => res.status(200).send({ users }))
@@ -23,7 +23,7 @@ router.get('/', tokenVerify, (req, res) => {
 router.get('/:userId', tokenVerify, (req, res) => {
   const { userId } = req.params;
   const { user } = req;
-  if (!user.admin) return res.status(404).send({ msg: 'You are not allowed to do that' });
+  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOne({ _id: userId })
     .select('-password')
@@ -41,7 +41,7 @@ router.post('/', tokenVerify, (req, res) => {
     password,
   } = req.body;
 
-  if (!user.admin) return res.status(404).send({ msg: 'You are not allowed to do that' });
+  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
   return User.create(
     {
       name,
@@ -52,7 +52,7 @@ router.post('/', tokenVerify, (req, res) => {
     },
   )
     .select('-password')
-    .then(newUser => res.status(200).send({ newUser }))
+    .then(newUser => res.status(200).send({ msgType: 'success', msg: 'You successfully registered a new user', newUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -63,12 +63,12 @@ router.put('/:userId', tokenVerify, (req, res) => {
   const newUserdata = req.body;
 
 
-  if (!user.admin) return res.status(404).send({ msg: 'You are not allowed to do that' });
+  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOneAndUpdate({ _id: userId },
     newUserdata,
     { new: true })
-    .then(updatedUser => res.status(200).send({ updatedUser }))
+    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully updated the user', updatedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -78,12 +78,12 @@ router.put('/:userId/permissions', tokenVerify, (req, res) => {
   const { user } = req;
 
 
-  if (!user.admin) return res.status(404).send({ msg: 'You are not allowed to do that' });
+  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOneAndUpdate({ _id: userId },
     { admin: true },
     { new: true })
-    .then(updatedUser => res.status(200).send({ updatedUser }))
+    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully made user admin', updatedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -93,10 +93,10 @@ router.delete('/:userId', tokenVerify, (req, res) => {
   const { user } = req;
 
 
-  if (!user.admin) return res.status(404).send({ msg: 'You are not allowed to do that' });
+  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOneAndDelete({ _id: userId })
-    .then(deletedUser => res.status(200).send({ deletedUser }))
+    .then(deletedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully removed user', deletedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
