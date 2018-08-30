@@ -30,10 +30,11 @@ export function tokenVerify(req, res, next) {
     }
 
     return User.findById(decodedToken.id, { password: 0 }).select('-password').then((user) => {
+      if (user == null) return res.status(404).send({ msgType: 'danger', msg: 'No user found' });
       req.user = user;
       req.userId = decodedToken.id;
 
-      next();
+      return next();
     });
   });
 }
