@@ -3,7 +3,7 @@ if (!process.env.PORT) {
 }
 
 /* Database */
-const DATABASE_CONNECTION = `mongodb://${process.env.DB_USER}:${
+const DATABASE_CONNECTION = process.env.MONGODB_URI || `mongodb://${process.env.DB_USER}:${
   process.env.DB_PASSWORD
 }@${process.env.MONGO_DEV_DB}`;
 
