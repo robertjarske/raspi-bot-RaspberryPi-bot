@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server": "cd backend && npm start",
+    "server": "cd backend && npm run start-dev",
     "server-test": "cd backend && npm run test-watch",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
