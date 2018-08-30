@@ -9,6 +9,9 @@
     "test": "mocha --compilers js:babel-core/register **/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
+  "engines": {
+    "node": "10.8.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
