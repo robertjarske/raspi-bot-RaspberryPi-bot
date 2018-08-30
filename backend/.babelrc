@@ -5,5 +5,8 @@
         "node": "current"
       }
     }]
+  ],
+  "ignore": [
+    "node_modules"
   ]
 }

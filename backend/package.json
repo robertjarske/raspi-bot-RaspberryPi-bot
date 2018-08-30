@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "start-dev": "nodemon --exec babel-node server.js",
+    "build": "babel ./ -d dist",
     "test": "mocha --compilers js:babel-core/register **/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
