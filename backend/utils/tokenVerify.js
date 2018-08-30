@@ -29,7 +29,7 @@ export function tokenVerify(req, res, next) {
       return res.status(500).send({ authenticated: false, msg: message });
     }
 
-    return User.findById(decodedToken.id, { password: 0 }).then((user) => {
+    return User.findById(decodedToken.id, { password: 0 }).select('-password').then((user) => {
       req.user = user;
       req.userId = decodedToken.id;
 
