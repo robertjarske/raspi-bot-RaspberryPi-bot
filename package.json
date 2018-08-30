@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "babel-eslint": "^9.0.0",
     "dotenv": "^6.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
@@ -16,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server": "cd backend && npm start", 
+    "server": "cd backend && npm start",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "dev": "concurrently --kill-others \"yarn start\" \"yarn server\""
