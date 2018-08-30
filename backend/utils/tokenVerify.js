@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { SECRET } from '../config/config';
+import { SECRET } from '../db/config/config';
 import User from '../models/User';
 
 export function tokenVerify(req, res, next) {

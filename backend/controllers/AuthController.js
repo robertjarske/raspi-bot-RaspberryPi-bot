@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { SECRET } from '../config/config';
+import { SECRET } from '../db/config/config';
 import User from '../models/User';
 import { tokenVerify } from '../utils/tokenVerify';
 
@@ -14,7 +14,10 @@ router.use(bodyParser.json());
 
 router.post('/register', (req, res) => {
   const {
-    email, name, username, password,
+    email,
+    name,
+    username,
+    password,
   } = req.body;
 
   User.create(
@@ -44,33 +47,43 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
-  User.findOne({ email }, (error, user) => {
-    if (error) {
-      return res.status(500).send('An error occurred when trying to log in');
-    }
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).send({
+          authenticated: false,
+          token: null,
+          user: null,
+          msgType: 'danger',
+          msg: 'No registered user found with that email',
+        });
+      }
 
-    if (!user) {
-      return res.status(404).send('No registered user found with that email');
-    }
+      const isValidPassword = bcrypt.compareSync(password, user.password);
 
-    const isValidPassword = bcrypt.compareSync(password, user.password);
+      if (!isValidPassword) {
+        return res.status(401).send({
+          authenticated: false,
+          token: null,
+          user: null,
+          msgType: 'danger',
+          msg: 'Invalid Email or Password',
+        });
+      }
 
-    if (!isValidPassword) {
-      return res.status(401).send({
-        authenticated: false,
-        token: null,
+      const token = jwt.sign({ id: user._id }, SECRET.secret, {
+        expiresIn: 86400,
       });
-    }
 
-    const token = jwt.sign({ id: user._id }, SECRET.secret, {
-      expiresIn: 86400,
-    });
-
-    return res.status(200).send({
-      authenticated: true,
-      token,
-    });
-  });
+      return res.status(200).send({
+        authenticated: true,
+        token,
+        user,
+        msgType: 'success',
+        msg: 'Successfully Logged In',
+      });
+    })
+    .catch(() => res.status(500).send({ authenticated: false, msg: 'An error occurred when trying to log in' }));
 });
 
 router.get('/me', tokenVerify, (req, res) => {
