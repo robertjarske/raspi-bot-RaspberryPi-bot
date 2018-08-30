@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --exec babel-node server.js",
+    "start": "node ./dist/server.js",
     "start-dev": "nodemon --exec babel-node server.js",
-    "build": "babel ./ -d dist",
+    "clean": "rm -rf dist && mkdir dist",
+    "build": "npm run clean && babel ./ -d dist",
     "test": "mocha --compilers js:babel-core/register **/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
