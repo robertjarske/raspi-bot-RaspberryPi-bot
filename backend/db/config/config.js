@@ -1,5 +1,5 @@
 if (!process.env.PORT) {
-  require("dotenv").config();
+  require('dotenv').config();
 }
 
 /* Database */
@@ -8,7 +8,7 @@ const DATABASE_CONNECTION = `mongodb://${process.env.DB_USER}:${
 }@${process.env.MONGO_DEV_DB}`;
 
 const SECRET = {
-  secret: "superSecretCat"
+  secret: 'superSecretCat',
 };
 
 export { DATABASE_CONNECTION, SECRET };

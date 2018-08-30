@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node index.js"
+    "start": "nodemon --exec babel-node server.js",
+    "test": "mocha --compilers js:babel-core/register **/*.test.js",
+    "test-watch": "nodemon --exec 'npm test'"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +25,9 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "nodemon": "^1.18.3"
+    "expect": "^23.5.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
   }
 }

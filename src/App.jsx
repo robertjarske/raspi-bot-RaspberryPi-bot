@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import logo from './logo.svg';
@@ -14,9 +14,9 @@ const mapDispatchToProps = dispatch => ({
   requestAuth: credentials => dispatch(requestAuth(credentials)),
 });
 
-class App extends Component {
-  constructor() {
-    super();
+class App extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       backend: '',
     };
