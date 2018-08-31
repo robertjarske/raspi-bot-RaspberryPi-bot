@@ -1,7 +1,7 @@
 /* eslint-disable */
 const expect = require('expect');
 const request = require('supertest');
-const app = require('../server');
+const server = require('../server');
 const User = require('../models/User');
 
 const mockUsers = [{
@@ -39,7 +39,7 @@ describe('POST auth/register', () => {
       password: 'testpassword',
     }
 
-    request(app)
+    request(server)
       .post('/auth/register')
       .send(newUser)
       .expect(200)
@@ -64,7 +64,7 @@ describe('POST auth/register', () => {
       password: '',
     }
 
-    request(app)
+    request(server)
       .post('/auth/register')
       .send(invalidNewUser)
       .expect(500)
@@ -85,7 +85,7 @@ describe('POST auth/register', () => {
 describe('POST /auth/login', () => {
   it('should log in user', (done) => {
     
-    request(app)
+    request(server)
       .post('/auth/login')
       .send({email: mockUsers[0].email, password: mockUsers[0].password})
       .expect(200)
@@ -99,10 +99,35 @@ describe('POST /auth/login', () => {
   })
 })
 
+describe('GET /auth/me', () => {
+  it('should return the user logged in', (done) => {
+
+    request(server)
+      .post('/auth/login')
+      .send({email: mockUsers[0].email, password: mockUsers[0].password})
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.token);
+        token = res.body.token;
+      })
+      .end(() => {
+        request(server)
+        .get('/auth/me')
+        .set('x-access-token', token)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.user.email).toBe(mockUsers[0].email)
+        })
+        .end(done)
+
+      })
+  })
+})
+
 describe('GET /users', () => {
   it('should get all users if admin', (done) => {
 
-    request(app)
+    request(server)
       .post('/auth/login')
       .send({email: mockUsers[0].email, password: mockUsers[0].password})
       .expect(200)
@@ -111,7 +136,7 @@ describe('GET /users', () => {
         token = res.body.token;
       })
       .end(() => {
-        request(app)
+        request(server)
           .get('/users')
           .set('x-access-token', token)
           .expect(200)
@@ -129,7 +154,7 @@ describe('GET /users', () => {
 describe('GET /users/:id', () => {
   it('should get user by id if admin', (done) => {
 
-    request(app)
+    request(server)
       .post('/auth/login')
       .send({email: mockUsers[0].email, password: mockUsers[0].password})
       .expect(200)
@@ -138,7 +163,7 @@ describe('GET /users/:id', () => {
         token = res.body.token;
       })
       .end(() => {
-        request(app)
+        request(server)
           .get('/users')
           .set('x-access-token', token)
           .expect(200)
@@ -147,7 +172,7 @@ describe('GET /users/:id', () => {
             userId = res.body.users[0]._id
           })
           .end(() => {
-            request(app)
+            request(server)
               .get(`/users/${userId}`)
               .set('x-access-token', token)
               .expect(200)
