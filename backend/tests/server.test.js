@@ -97,6 +97,26 @@ describe('POST /auth/login', () => {
         done();
       })
   })
+
+  it('should not log in a user with invalid req.body', (done) => {
+    const invalidUser = {
+      email: 'someemail@thatdoesnotexist.com',
+      password: 'pass',
+    }
+
+    request(server)
+      .post('/auth/login')
+      .send(invalidUser)
+      .expect(404)
+      .expect((res) => {
+        expect(res.body.msg).toBe('No registered user found with that email')
+      })
+      .end((err, res) => {
+        if (err) return done(err);
+
+        done();
+      })
+  })
 })
 
 describe('GET /auth/me', () => {
@@ -122,6 +142,22 @@ describe('GET /auth/me', () => {
 
       })
   })
+
+  it('should not return the user if token is invalid', (done) => {
+
+    request(server)
+    .get('/auth/me')
+    .set('x-access-token', 'invalid-token')
+    .expect(500)
+    .expect((res) => {
+      expect(res.body.msg).toBe('There seems to be an error with your token, please logout and login again')
+    })
+    .end((err, res) => {
+      if (err) return done(err);
+      done();
+    })
+
+  })
 })
 
 describe('GET /users', () => {
@@ -142,6 +178,31 @@ describe('GET /users', () => {
           .expect(200)
           .expect((res) => {
             expect(res.body.users.length).toBe(3)
+          })
+          .end((err, res) => {
+            if (err) return done(err);
+            done();
+          })
+      })
+  })
+
+  it('should not get all users if not admin', (done) => {
+
+    request(server)
+      .post('/auth/login')
+      .send({email: mockUsers[1].email, password: mockUsers[1].password})
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.token)
+        token = res.body.token;
+      })
+      .end(() => {
+        request(server)
+          .get('/users')
+          .set('x-access-token', token)
+          .expect(404)
+          .expect((res) => {
+            expect(res.body.msg).toBe('You are not allowed to do that')
           })
           .end((err, res) => {
             if (err) return done(err);
