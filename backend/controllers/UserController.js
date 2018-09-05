@@ -83,7 +83,7 @@ router.put('/:userId/permissions', tokenVerify, (req, res) => {
   return User.findOneAndUpdate({ _id: userId },
     { admin: true },
     { new: true })
-    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully made user admin', user: updatedUser }))
+    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully made the user admin', user: updatedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -96,7 +96,7 @@ router.delete('/:userId', tokenVerify, (req, res) => {
   if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOneAndDelete({ _id: userId })
-    .then(deletedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully removed user', user: deletedUser }))
+    .then(deletedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully removed the user', user: deletedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
