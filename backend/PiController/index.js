@@ -1,4 +1,5 @@
 const express = require('express');
+const raspividStream = require('raspivid-stream');
 const http = require('http');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -35,14 +36,25 @@ function sendCommand(cmd) {
 
 /** Sockets */
 io.on('connect', () => {
+  console.log('connected');
   io.on('command', (cmd) => {
     console.log('the command triggered', cmd);
     sendCommand(cmd);
   });
+
+  io.on('start-stream', (socket) => {
+    console.log(socket.id);
+  });
 });
 
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  next(err);
+});
+
 const port = process.env.PORT || 8000;
 server.listen(port, () => console.log(`App listening on port ${port}`));
+
 
 module.exports = server;

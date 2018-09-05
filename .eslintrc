@@ -10,7 +10,7 @@
   },
   "overrides": [
     {
-      "files": ["*-test.js","*.spec.js"],
+      "files": ["*-test.js", "*.test.jsx", "*.spec.js"],
       "rules": {
         "no-unused-expressions": "off"
       }

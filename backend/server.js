@@ -53,26 +53,10 @@ namespace.on('connection', (socket) => {
   socket.on('robotMessage', (msg) => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
+  socket.on('disconnect', () => {
+    console.log(`::::User left ${socket.id}::::`);
+  });
 });
-
-// io.on('connection', (socket) => {
-//   console.log('connected', socket.id);
-//   socket.emit('hi', 'everyone');
-
-//   // console.log('User connected', socket);
-//   // socket.broadcast.emit('hello', 'hello');
-//   // socket.on('disconnect', () => {
-//   //   console.log('user disconnected');
-//   // });
-
-//   // socket.on('PI', (msg) => {
-//   //   console.log(msg);
-//   // });
-
-//   // socket.on('command', (cmd) => {
-//   //   console.log(cmd);
-//   // });
-// });
 
 /* Init */
 const port = process.env.PORT || 8000;
