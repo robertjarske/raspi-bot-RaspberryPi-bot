@@ -1,1 +1,1 @@
-scp -r ./backend/ pi@10.126.5.78:nodebot
+scp -r ./backend/PiController/. pi@10.126.5.78:nodebot

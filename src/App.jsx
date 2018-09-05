@@ -58,6 +58,20 @@ class App extends React.Component {
         </header>
         <button
           type="submit"
+          onMouseDown={() => this.sendCommand('forward')}
+          onMouseUp={() => this.sendCommand('stop')}
+        >
+          Forward
+        </button>
+        <button
+          type="submit"
+          onMouseDown={() => this.sendCommand('backward')}
+          onMouseUp={() => this.sendCommand('stop')}
+        >
+          Backward
+        </button>
+        <button
+          type="submit"
           onMouseDown={() => this.sendCommand('left')}
           onMouseUp={() => this.sendCommand('stop')}
         >
