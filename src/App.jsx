@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import logo from './logo.svg';
 import { apiCall } from './utils/apiCall';
 import { requestAuth } from './redux/auth/actions';
+import isMobile from './utils/isMobile';
 import './App.css';
 
 const mapStateToProps = state => ({
@@ -19,13 +20,20 @@ class App extends React.Component {
     super(props);
     this.state = {
       backend: '',
+      isMobile: false,
     };
 
     this.sendCommand = this.sendCommand.bind(this);
-    this.socket = io(process.env.REACT_APP_API_URL);
+    this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
   }
 
   componentDidMount() {
+    if (isMobile.any()) {
+      this.setState({
+        isMobile: true,
+      });
+    }
+
     apiCall(process.env.REACT_APP_API_URL)
       .then((res) => {
         this.setState({
@@ -44,7 +52,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { backend } = this.state;
+    const { backend, isMobile } = this.state;
 
     return (
       <div className="App">
@@ -93,13 +101,13 @@ class App extends React.Component {
         <div
           style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
         >
-          <div
+          {/* <div
             style={{
               height: '500px',
               width: '500px',
               backgroundImage: 'url(\'http://10.126.5.78:8080/?action=stream\')',
             }}
-          />
+          /> */}
         </div>
       </div>
     );
