@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import { DATABASE_CONNECTION } from './db/config/config';
 import AuthController from './controllers/AuthController';
 import UserController from './controllers/UserController';
+import RobotController from './controllers/RobotController';
 
 const app = express();
 const server = http.Server(app);
@@ -35,17 +36,43 @@ app.get('/', (req, res) => {
 
 app.use('/auth', AuthController);
 app.use('/users', UserController);
+app.use('/robots', RobotController);
+
 
 /* Socket */
-io.on('connection', (socket) => {
-  console.log('User connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
+
+const namespace = io.of('123');
+
+namespace.on('connection', (socket) => {
+  console.log('someone connected', socket.id);
+
   socket.on('command', (cmd) => {
-    console.log(`command: ${cmd}`);
+    console.log(`:::Emitting ${cmd}:::`);
+    socket.broadcast.emit('command', cmd);
+  });
+  socket.on('robotMessage', (msg) => {
+    console.log(`::::Recieved from robot ${msg}::::`);
   });
 });
+
+// io.on('connection', (socket) => {
+//   console.log('connected', socket.id);
+//   socket.emit('hi', 'everyone');
+
+//   // console.log('User connected', socket);
+//   // socket.broadcast.emit('hello', 'hello');
+//   // socket.on('disconnect', () => {
+//   //   console.log('user disconnected');
+//   // });
+
+//   // socket.on('PI', (msg) => {
+//   //   console.log(msg);
+//   // });
+
+//   // socket.on('command', (cmd) => {
+//   //   console.log(cmd);
+//   // });
+// });
 
 /* Init */
 const port = process.env.PORT || 8000;
