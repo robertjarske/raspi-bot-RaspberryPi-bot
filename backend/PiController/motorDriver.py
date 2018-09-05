@@ -1,48 +1,32 @@
 from rrb3 import *
-from threading import Timer
 import sys
 import tty
 import termios
 
-
 rr = RRB3(9.0, 6.0) # battery, motor
 
-ongoing = True
-
-def stop():
-  print('should stop')
-  ongoing = False
-
-s = Timer(0.1, stop, ())
-l = Timer(0.2, stop, ())
-
-try:
-  while ongoing:
-    if sys.argv[1] == 'forward':
-      print('forward')
+def main():
+  while True:
+    command = sys.stdin.readline()
+    command = command.split('\n')[0]
+    if command == "forward":
       rr.forward()
-      l.start()
-      ongoing = False
-    elif sys.argv[1] == 'backward':
-      print('backward')
+      sys.stdout.write("You said forward!\n")
+    elif command == "backward":
       rr.reverse()
-      l.start()
-      ongoing = False
-    elif sys.argv[1] == 'left':
-      print('left')
+      sys.stdout.write("You said backward!\n")
+    elif command == "left":
       rr.left()
-      s.start()
-      ongoing = False
-    elif sys.argv[1] == 'right':
-      print('right')
+      sys.stdout.write("You said left!\n")
+    elif command == "right":
       rr.right()
-      s.start()
-      ongoing = False
-    elif sys.argv[1] == 'stop':
-      print('stop')
+      sys.stdout.write("You said right!\n")
+    elif command == "stop":
       rr.stop()
-      s.start()
-      ongoing = False
+      sys.stdout.write("You said stop!\n")
+    else:
+      sys.stdout.write("Sorry, I didn't understand that.\n")
+    sys.stdout.flush()
 
-except KeyboardInterrupt:
-  exit()
+if __name__ == '__main__':
+  main()
