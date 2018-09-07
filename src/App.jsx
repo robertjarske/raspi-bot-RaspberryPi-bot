@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import {
-  PrivateRoute, Stream, Header, withPublicRoot,
+  PrivateRoute, Stream, withPublicRoot,
 } from './components';
 import {
   Dashboard, Developer, Landingpage, Login, Signup, NotFound,
