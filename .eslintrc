@@ -7,13 +7,5 @@
   },
   "rules": {
     "import/prefer-default-export": "off"
-  },
-  "overrides": [
-    {
-      "files": ["*-test.js", "*.test.jsx", "*.spec.js"],
-      "rules": {
-        "no-unused-expressions": "off"
-      }
-    }
-  ]
+  }
 }
