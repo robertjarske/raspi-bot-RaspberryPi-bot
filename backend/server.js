@@ -46,6 +46,10 @@ const namespace = io.of('123');
 namespace.on('connection', (socket) => {
   console.log('someone connected', socket.id);
 
+  socket.on('start-stream', () => {
+    socket.broadcast.emit('start-stream');
+  });
+
   socket.on('command', (cmd) => {
     console.log(`:::Emitting ${cmd}:::`);
     socket.broadcast.emit('command', cmd);
@@ -55,6 +59,14 @@ namespace.on('connection', (socket) => {
   });
   socket.on('disconnect', () => {
     console.log(`::::User left ${socket.id}::::`);
+  });
+
+  socket.on('data', (data) => {
+    socket.broadcast.emit('stream', data);
+  });
+
+  socket.on('init', (data) => {
+    socket.broadcast.emit('init', data);
   });
 });
 
