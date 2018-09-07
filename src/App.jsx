@@ -1,8 +1,9 @@
 import React from 'react';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { Player } from 'broadway-player';
+// import { Player } from 'broadway-player';
 import Header from './components/Header/Header';
+import Stream from './components/Stream/Stream';
 import isMobile from './utils/isMobile';
 import { apiCall } from './utils/apiCall';
 import { requestAuth } from './redux/auth/actions';
@@ -22,37 +23,24 @@ class App extends React.Component {
     super(props);
     this.state = {
       backend: '',
-      isMobile: false,
+      mobileDevice: false,
       activeMenu: false,
     };
 
     this.sendCommand = this.sendCommand.bind(this);
     this.changeMenu = this.changeMenu.bind(this);
-    this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
-    this.VideoPlayer = new Player({
-      useWorker: true,
-      webgl: 'true',
-      workerFile: './Decoder.js',
-      width: 960,
-      height: 540,
-    });
-
-    this.socket.on('stream', (stream) => {
-      this.VideoPlayer.decode(new Uint8ClampedArray(stream));
-      this.ctx.drawImage(this.VideoPlayer.canvas, 0, 0);
-    });
   }
 
   componentDidMount() {
-    this.socket.emit('start-stream');
-
-    isMobile.any()
-      ? this.setState({
-        isMobile: true,
-      })
-      : this.setState({
-        isMobile: false,
+    if (isMobile.any()) {
+      this.setState({
+        mobileDevice: true,
       });
+    } else {
+      this.setState({
+        mobileDevice: false,
+      });
+    }
 
     apiCall(process.env.REACT_APP_API_URL)
       .then((res) => {
@@ -61,8 +49,6 @@ class App extends React.Component {
         });
       })
       .catch(e => console.error(e));
-
-    this.ctx = this.canvasNode.getContext('2d');
   }
 
   sendCommand(direction) {
@@ -80,7 +66,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { backend, isMobile, activeMenu } = this.state;
+    const { backend, mobileDevice, activeMenu } = this.state;
 
     return (
       <div className="App">
@@ -120,17 +106,8 @@ class App extends React.Component {
         <button type="submit" onClick={() => this.login()}>
           Login
         </button>
-        <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-        >
-          <canvas
-            ref={(node) => {
-              this.canvasNode = node;
-            }}
-            width={960}
-            height={540}
-          />
-        </div>
+        <Stream />
+        {mobileDevice ? <p>Mobile Device detected</p> : <p>Not mobile device</p>}
       </div>
     );
   }
