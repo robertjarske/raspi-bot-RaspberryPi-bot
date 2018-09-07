@@ -1,7 +1,6 @@
 import React from 'react';
-// import io from 'socket.io-client';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
-// import { Player } from 'broadway-player';
 import Header from './components/Header/Header';
 import Stream from './components/Stream/Stream';
 import isMobile from './utils/isMobile';
@@ -29,6 +28,7 @@ class App extends React.Component {
 
     this.sendCommand = this.sendCommand.bind(this);
     this.changeMenu = this.changeMenu.bind(this);
+    this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
   }
 
   componentDidMount() {
