@@ -11,6 +11,7 @@ import './App.css';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -71,6 +72,8 @@ class App extends React.Component {
 
   render() {
     const { backend, mobileDevice, activeMenu } = this.state;
+    const { isAuthenticated, user } = this.props;
+    console.log(isAuthenticated, user);
 
     return (
       <div className="App">

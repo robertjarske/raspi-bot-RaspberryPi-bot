@@ -18,7 +18,6 @@ const authReducer = (state = initialState, action) => {
     case REQUEST_AUTH_START:
       return { ...state, isFetching: true };
     case REQUEST_AUTH_SUCCESS:
-      debugger;
       return {
         ...state,
         user: action.payload.user,
@@ -26,7 +25,6 @@ const authReducer = (state = initialState, action) => {
         isFetching: false,
       };
     case REQUEST_AUTH_FAIL:
-      debugger;
       return {
         ...state,
         user: {},
