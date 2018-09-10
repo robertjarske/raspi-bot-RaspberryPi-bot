@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Header from './components/Header/Header';
 import Stream from './components/Stream/Stream';
 import isMobile from './utils/isMobile';
-import { apiCall } from './utils/apiCall';
+import { curriedApiCall } from './utils/apiCall';
 import { requestAuth } from './redux/auth/actions';
 import './App.css';
 
@@ -42,7 +42,11 @@ class App extends React.Component {
       });
     }
 
-    apiCall(process.env.REACT_APP_API_URL)
+    curriedApiCall(process.env.REACT_APP_API_URL)(null, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
       .then((res) => {
         this.setState({
           backend: res.res,
@@ -56,7 +60,7 @@ class App extends React.Component {
   }
 
   login() {
-    this.props.requestAuth({ email: 'test@test.com', password: 'password' });
+    this.props.requestAuth({ email: 'rob@test.com', password: 'password' });
   }
 
   changeMenu() {
