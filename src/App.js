@@ -143,7 +143,7 @@ class App extends React.Component {
             />
             <Route path="*" component={NotFound} />
           </Switch>
-        <button
+        {/* <button
           type="submit"
           onMouseDown={() => this.sendCommand('forward')}
           onMouseUp={() => this.sendCommand('stop')}
@@ -173,7 +173,7 @@ class App extends React.Component {
         </button>
         <button type="submit" onClick={() => this.login()}>
           Login
-        </button>
+        </button> */}
         <Stream socket={this.socket}/>
         {mobileDevice ? <p>Mobile Device detected</p> : <p>Not mobile device</p>}
       </div>
