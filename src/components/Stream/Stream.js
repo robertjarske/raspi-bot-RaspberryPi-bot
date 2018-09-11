@@ -1,12 +1,11 @@
 import React from 'react';
-import io from 'socket.io-client';
 import { Player } from 'broadway-player';
 
 class Stream extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
+    this.socket = this.props.socket;
     this.VideoPlayer = new Player({
       useWorker: true,
       webgl: 'true',
