@@ -32,7 +32,7 @@ export const requestLogoutFail = err => ({
   payload: err,
 });
 
-export const requestAuth = credentials => (dispatch) => {
+export const requestLogin = credentials => (dispatch) => {
   dispatch(requestAuthStart());
 
   authApiCall('login', {
@@ -49,14 +49,20 @@ export const requestAuth = credentials => (dispatch) => {
     .catch(err => dispatch(requestAuthFail(err)));
 };
 
-export const verifyAuth = () => (dispatch) => {
+export const requestSignup = credentials => (dispatch) => {
   dispatch(requestAuthStart());
 
-  fetch(`${process.env.REACT_APP_API_URL}/api/auth`, {
-    credentials: 'include',
+  authApiCall('register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
   })
-    .then(handleResponse)
-    .then(data => dispatch(requestAuthSuccess(data)))
+    .then((data) => {
+      localStorage.setItem('token', data.token);
+      dispatch(requestAuthSuccess(data));
+    })
     .catch(err => dispatch(requestAuthFail(err)));
 };
 

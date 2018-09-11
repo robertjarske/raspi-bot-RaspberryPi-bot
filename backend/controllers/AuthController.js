@@ -33,7 +33,21 @@ router.post('/register', (req, res) => {
       const token = jwt.sign({ id: user._id }, SECRET.secret, {
         expiresIn: 86400,
       });
-      return res.status(200).send({ authenticated: true, token });
+
+      return res.status(200).send({
+        authenticated: true,
+        token,
+        user: {
+          _id: user._id,
+          admin: user.admin,
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          avatar: user.avatar,
+        },
+        msgType: 'success',
+        msg: 'Successfully Created Account',
+      });
     })
     .catch((error) => {
       if (error.code === 11000 || error.code === 11001) {

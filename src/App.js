@@ -10,7 +10,7 @@ import {
 } from './views';
 import isMobile from './utils/isMobile';
 import { curriedApiCall } from './utils/apiCall';
-import { requestAuth } from './redux/auth/actions';
+import { requestLogin } from './redux/auth/actions';
 import './App.css';
 
 
@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestAuth: credentials => dispatch(requestAuth(credentials)),
+  requestLogin: credentials => dispatch(requestLogin(credentials)),
 });
 
 const LandingpageWithPublic = withPublicRoot(Landingpage);
@@ -72,7 +72,7 @@ class App extends React.Component {
   }
 
   login() {
-    this.props.requestAuth({ email: 'rob@test.com', password: 'password' });
+    this.props.requestLogin({ email: 'rob@test.com', password: 'password' });
   }
 
   changeMenu() {
