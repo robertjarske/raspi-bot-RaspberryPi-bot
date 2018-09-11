@@ -13,7 +13,9 @@ const Form = ({
   isSubmitting,
   loginRequest,
   ...props
-}) => (
+}) => {
+  console.log(props);
+  return (
     <form onSubmit={handleSubmit}>
       <input
         value={values.email}
@@ -33,7 +35,8 @@ const Form = ({
         />
       <button type="submit">Login</button>
     </form>
-);
+  );
+};
 
 export default withFormik({
   mapPropsToValues() {

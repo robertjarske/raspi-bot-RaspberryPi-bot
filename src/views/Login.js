@@ -1,7 +1,8 @@
 import React from 'react';
+import { Form } from '../components';
 
 const Login = ({ ...props }) => (
-  <div>This is Login</div>
+  <Form kindof={'login'}/>
 );
 
 export default Login;
