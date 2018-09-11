@@ -2,8 +2,12 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import Header from './components/Header/Header';
-import Stream from './components/Stream/Stream';
+import {
+  PrivateRoute, Stream, Header, withPublicRoot,
+} from './components';
+import {
+  Dashboard, Developer, Landingpage, Login, Signup, NotFound,
+} from './views';
 import isMobile from './utils/isMobile';
 import { curriedApiCall } from './utils/apiCall';
 import { requestAuth } from './redux/auth/actions';
@@ -18,6 +22,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestAuth: credentials => dispatch(requestAuth(credentials)),
 });
+
+const LandingpageWithPublic = withPublicRoot(Landingpage);
+const LoginWithPublic = withPublicRoot(Login);
+const SignupWithPublic = withPublicRoot(Signup);
+const DeveloperpageWithPublic = withPublicRoot(Developer);
+
 
 class App extends React.Component {
   constructor(props) {
@@ -83,9 +93,12 @@ class App extends React.Component {
               exact
               path="/"
               render={routeProps => (
-                <LandingPageWithPublic
+                <LandingpageWithPublic
                   {...routeProps}
                   authenticated={isAuthenticated}
+                  backend={backend}
+                  activeMenu={activeMenu}
+                  changeMenu={this.changeMenu}
                 />
               )}
             />
@@ -96,6 +109,9 @@ class App extends React.Component {
                 <LoginWithPublic
                   {...routeProps}
                   authenticated={isAuthenticated}
+                  backend={backend}
+                  activeMenu={activeMenu}
+                  changeMenu={this.changeMenu}
                 />
               )}
             />
@@ -103,29 +119,30 @@ class App extends React.Component {
               exact
               path="/signup"
               render={routeProps => (
-                <SignUpWithPublic
+                <SignupWithPublic
                   {...routeProps}
                   authenticated={isAuthenticated}
+                  backend={backend}
+                  activeMenu={activeMenu}
+                  changeMenu={this.changeMenu}
                 />
               )}
             />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <Route
-              path="/developers"
+              path="/developer"
               render={routeProps => (
-                <DevelopersPageWithPublic
+                <DeveloperpageWithPublic
                   {...routeProps}
                   authenticated={isAuthenticated}
+                  backend={backend}
+                  activeMenu={activeMenu}
+                  changeMenu={this.changeMenu}
                 />
               )}
             />
             <Route path="*" component={NotFound} />
           </Switch>
-        <Header
-          changeMenu={this.changeMenu}
-          backend={backend}
-          activeMenu={activeMenu}
-        />
         <button
           type="submit"
           onMouseDown={() => this.sendCommand('forward')}
