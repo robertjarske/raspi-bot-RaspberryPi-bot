@@ -1,4 +1,5 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import Header from './components/Header/Header';
@@ -77,6 +78,49 @@ class App extends React.Component {
 
     return (
       <div className="App">
+      <Switch>
+            <Route
+              exact
+              path="/"
+              render={routeProps => (
+                <LandingPageWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={routeProps => (
+                <LoginWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signup"
+              render={routeProps => (
+                <SignUpWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <Route
+              path="/developers"
+              render={routeProps => (
+                <DevelopersPageWithPublic
+                  {...routeProps}
+                  authenticated={isAuthenticated}
+                />
+              )}
+            />
+            <Route path="*" component={NotFound} />
+          </Switch>
         <Header
           changeMenu={this.changeMenu}
           backend={backend}
