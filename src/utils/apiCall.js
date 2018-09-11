@@ -11,7 +11,7 @@ const apiCall = async (url, subUrl, request) => {
     return Promise.reject(data);
   }
 
-  return Promise.resolve(data);
+  return data;
 };
 
 export const curriedApiCall = _.curry(apiCall);
