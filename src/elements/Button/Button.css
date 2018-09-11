@@ -1,0 +1,29 @@
+.btn {
+  padding: 15px;
+  min-width: 100px;
+  border-radius: 5px;
+  margin: 20px;
+  box-shadow: var(--box-shadow);
+  background-color: var(--default);
+  color: #fff;
+}
+
+.btn:focus {
+  outline: 0;
+}
+
+.success {
+  background-color: var(--success);
+}
+
+.danger {
+  background-color: var(--danger);
+}
+
+.warning {
+  background-color: var(--warning);
+}
+
+.dark {
+  background-color: var(--dark);
+}
