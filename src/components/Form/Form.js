@@ -1,5 +1,6 @@
 import React from 'react';
 import { withFormik } from 'formik';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Button, Input } from '../../elements';
 import './Form.css';
@@ -17,6 +18,7 @@ const Form = ({
 }) => (
   props.kindof === 'login'
     ? <form className="form-container" onSubmit={handleSubmit}>
+        <h2 className="form-heading">NodeBot ❤️️</h2>
         <h3>Login</h3>
         <Input
           value={values.email}
@@ -35,10 +37,12 @@ const Form = ({
           placeholder="Password..."
           />
         <Button appearance={'success'} type="submit">Login</Button>
+        <p>No account? Go to <Link to="/signup" style={{ color: '#118ab2' }}>Signup</Link> to create one</p>
       </form>
 
     : <form className="form-container" onSubmit={handleSubmit}>
-        <h3>Create account</h3>
+        <h2 className="form-heading">NodeBot ❤️️</h2>
+        <h3>Create Account</h3>
         <Input
           value={values.name}
           onChange={handleChange}
@@ -71,7 +75,8 @@ const Form = ({
           type="password"
           placeholder="Password"
           />
-        <Button type="submit">Create account</Button>
+        <Button type="submit">Create Account</Button>
+        <p>Already have an account? Go to <Link to="/login" style={{ color: '#118ab2' }}>Login</Link> to get going</p>
       </form>
 
 );
@@ -106,7 +111,6 @@ export default withFormik({
   handleSubmit(values, {
     props, resetForm, setErrors, setSubmitting,
   }) {
-    console.log(values);
     if (props.kindof === 'signup') {
       return props.signupRequest(values);
     }

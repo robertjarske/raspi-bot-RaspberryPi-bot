@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form } from '../../components';
 import { requestSignup } from '../../redux/auth/actions';
+import './Signup.css';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,

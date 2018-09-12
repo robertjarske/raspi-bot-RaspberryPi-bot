@@ -2,9 +2,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   border: 1px solid var(--default);
+  border-bottom: 0;
   padding: 20px;
-  border-radius: 5px;
   box-shadow: var(--box-shadow);
-  width: 500px;
+  width: 50%;
+  margin-left: auto;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.form-heading {
+  padding-bottom: 150px;
+}
+
+@media only screen and (max-width: 850px) {
+  .form-container {
+    width: 100%;
+  }
 }
