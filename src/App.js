@@ -174,8 +174,7 @@ class App extends React.Component {
         <button type="submit" onClick={() => this.login()}>
           Login
         </button> */}
-        <Stream socket={this.socket}/>
-        {mobileDevice ? <p>Mobile Device detected</p> : <p>Not mobile device</p>}
+        {/* <Stream socket={this.socket}/> */}
       </div>
     );
   }
