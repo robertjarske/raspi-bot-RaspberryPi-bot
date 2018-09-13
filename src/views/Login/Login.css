@@ -4,6 +4,9 @@
   width: 100%;
   position: absolute;
   z-index: -99;
+  background: url('../../assets/dominik-scythe-414905-unsplash.jpg');
+  background-size: cover;
+  background-position: left center;
 }
 
 .background::before {

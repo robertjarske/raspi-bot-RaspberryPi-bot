@@ -10,7 +10,7 @@ import {
 } from './views';
 import isMobile from './utils/isMobile';
 import { curriedApiCall } from './utils/apiCall';
-import { requestLogin } from './redux/auth/actions';
+import { requestLogin, requestLogout } from './redux/auth/actions';
 import './App.css';
 
 
@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   requestLogin: credentials => dispatch(requestLogin(credentials)),
+  requestLogout: () => dispatch(requestLogout()),
 });
 
 const LandingpageWithPublic = withPublicRoot(Landingpage);
@@ -40,6 +41,7 @@ class App extends React.Component {
 
     this.sendCommand = this.sendCommand.bind(this);
     this.changeMenu = this.changeMenu.bind(this);
+    this.logout = this.logout.bind(this);
     this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
   }
 
@@ -81,6 +83,10 @@ class App extends React.Component {
     });
   }
 
+  logout() {
+    this.props.requestLogout();
+  }
+
   render() {
     const { backend, mobileDevice, activeMenu } = this.state;
     const { isAuthenticated, user } = this.props;
@@ -99,6 +105,7 @@ class App extends React.Component {
                   backend={backend}
                   activeMenu={activeMenu}
                   changeMenu={this.changeMenu}
+                  logout={this.logout}
                 />
               )}
             />
@@ -112,6 +119,7 @@ class App extends React.Component {
                   backend={backend}
                   activeMenu={activeMenu}
                   changeMenu={this.changeMenu}
+                  logout={this.logout}
                 />
               )}
             />
@@ -125,6 +133,7 @@ class App extends React.Component {
                   backend={backend}
                   activeMenu={activeMenu}
                   changeMenu={this.changeMenu}
+                  logout={this.logout}
                 />
               )}
             />
@@ -138,6 +147,7 @@ class App extends React.Component {
                   backend={backend}
                   activeMenu={activeMenu}
                   changeMenu={this.changeMenu}
+                  logout={this.logout}
                 />
               )}
             />

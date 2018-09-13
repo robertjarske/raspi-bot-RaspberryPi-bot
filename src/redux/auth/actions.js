@@ -4,10 +4,8 @@ import {
   REQUEST_AUTH_FAIL,
   REQUEST_LOGOUT_START,
   REQUEST_LOGOUT_SUCCESS,
-  REQUEST_LOGOUT_FAIL,
 } from './constants';
 
-import { handleResponse } from '../../utils/handleResponse';
 import { curriedApiCall } from '../../utils/apiCall';
 
 const authApiCall = curriedApiCall(`${process.env.REACT_APP_API_URL}/auth`);
@@ -23,13 +21,8 @@ export const requestAuthFail = err => ({
 });
 
 export const requestLogoutStart = () => ({ type: REQUEST_LOGOUT_START });
-export const requestLogoutSuccess = res => ({
+export const requestLogoutSuccess = () => ({
   type: REQUEST_LOGOUT_SUCCESS,
-  payload: res,
-});
-export const requestLogoutFail = err => ({
-  type: REQUEST_LOGOUT_FAIL,
-  payload: err,
 });
 
 export const requestLogin = credentials => (dispatch) => {
@@ -68,15 +61,6 @@ export const requestSignup = credentials => (dispatch) => {
 
 export const requestLogout = () => (dispatch) => {
   dispatch(requestLogoutStart());
-
-  fetch(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(handleResponse)
-    .then(res => dispatch(requestLogoutSuccess(res)))
-    .catch(err => dispatch(requestLogoutFail(err)));
+  localStorage.removeItem('token');
+  dispatch(requestLogoutSuccess());
 };

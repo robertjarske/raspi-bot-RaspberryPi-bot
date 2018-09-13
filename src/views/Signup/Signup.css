@@ -6,7 +6,7 @@
   z-index: -99;
   background: url('../../assets/dominik-scythe-414905-unsplash.jpg');
   background-size: cover;
-  background-position: center center;
+  background-position: left center;
 }
 
 .background::before {
