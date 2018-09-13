@@ -5,7 +5,7 @@ import { Header } from '../index';
 const withPublicRoot = ComposedComponent => class PublicRoot extends React.Component {
   render() {
     const {
-      authenticated, backend, activeMenu, changeMenu,
+      authenticated, backend, activeMenu, changeMenu, logout,
     } = this.props;
     return (
         <React.Fragment>
@@ -14,6 +14,7 @@ const withPublicRoot = ComposedComponent => class PublicRoot extends React.Compo
           activeMenu={activeMenu}
           changeMenu={changeMenu}
           isAuthenticated={authenticated}
+          logout={logout}
           />
           <main className="App-content">
             <ComposedComponent />

@@ -6,7 +6,12 @@ import './Header.css';
 const Header = ({ ...props }) => (
   <header className="App-header">
     <Logo backend={props.backend}/>
-    <Menu activeMenu={props.activeMenu} changeMenu={props.changeMenu}/>
+    <Menu
+      isAuthenticated={props.isAuthenticated}
+      activeMenu={props.activeMenu}
+      changeMenu={props.changeMenu}
+      logout={props.logout}
+    />
   </header>
 );
 

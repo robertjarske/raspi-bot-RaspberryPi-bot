@@ -1,81 +1,108 @@
-.landing-background {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: -99;
-  background: url('../../assets/dominik-scythe-414905-unsplash.jpg');
-  overflow: hidden;
-  background-size: cover;
-  background-position: center center;
-  clip-path: polygon(100% 0, 100% 42%, 0 64%, 0 0);
-}
-
-/* .landing-background::before {
-    content: "";
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: block;
-    z-index: 1000;
-} */
-
-/* .landing-background::after {
-    content: "";
-    position: absolute;
-    top: 93%;
-    left: 0;
-    height: 100%;
-    width: 150%;
-    background: white;
-    -webkit-transform: rotate(-5deg);
-    -moz-transform: rotate(-5deg);
-    transform: rotate(-5deg);
-    
-} */
-
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  touch-action: none;
-}
-
 .landing {
   display: flex;
   flex-direction: column
 }
 
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  touch-action: none;
+}
+
+.landing-background {
+  display: flex;
+  min-height: 100vh;
+  min-width: 100vw;
+  background: url('../../assets/dominik-scythe-414905-unsplash.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: left center;
+  clip-path: polygon(100% 0, 100% 85%, 0 100%, 0 0);
+}
+
 .landing-container {
   background: white;
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: column;
-  flex: 1;
-  align-self: flex-end;
   align-items: center;
-  justify-content: center;
-  transform: skewY(-5deg);
-  height: 40%;
+  /* justify-content: center; */
+  height: 100%;
+  width: 100%
   
 }
 
-.landing-container > * {
-  transform: skewY(5deg);
-  margin-top: 20px;
-}
 
 .landing-about {
-  display: flex;
-  flex-direction: column;
+  text-align: center;
   max-width: 40%;
   align-items: center;
 }
 
+.slider-container {
+  min-height: 200px;
+  margin-top: 40px;
+  width: 100%;
+}
 
+.slider ol {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.slider ol [aria-current="true"]::after {
+  pointer-events: none;
+  cursor: auto;
+  color: var(--success)
+}
+
+.slider ol li {
+  visibility: hidden;
+  margin: 10px;
+  transform: rotate(180deg)
+}
+
+.slider ol li::after {
+  content: '.';
+  cursor: pointer; 
+  visibility: visible;
+  font-size: 4em;
+  color: var(--default)
+}
+
+.slider-img1, .slider-img2, .slider-img3 {
+  background-size: cover;
+  height: 300px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  background-repeat: no-repeat;
+}
+
+.slider-img1 {
+  background-image: url('../../assets/baby-toy-blur-bokeh-981588.jpg');
+  background-position: center center;
+}
+.slider-img2 {
+  background-image: url('../../assets/pexels-photo-319968.jpeg');
+  background-position: center center;
+}
+.slider-img3 {
+  background-image: url('../../assets/bookcase-books-computers-1329068.jpg');
+  background-position: center center;
+}
+
+@media only screen and (max-width: 800px) {
+  .landing-background {
+    clip-path: polygon(100% 0, 100% 90%, 0 100%, 0 0);
+    background-attachment: scroll;
+    background-size: cover;
+    
+  }
+} 
