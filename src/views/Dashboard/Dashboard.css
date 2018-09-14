@@ -1,0 +1,60 @@
+.dashboard {
+  display: flex;
+  width: 100%;
+
+}
+
+.side-nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-self: flex-start;
+  background-color: var(--dark);
+  color: white;
+  min-height: 100vh;
+  max-width: 200px;
+  padding: 10px;
+}
+
+.side-nav-divider {
+  width: 100%;
+  border-bottom: 1px solid white;
+  margin: 20px 0;
+}
+
+.side-nav-list {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+
+.side-nav-list [aria-current="page"] li::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: 5px;
+  width: 0;
+  height: 0;
+  border-right: 15px solid white;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+}
+
+.side-nav-listitem {
+  width: 107.3%;
+  height: 40px;
+  position: relative;
+  background: linear-gradient(to right, var(--dark), var(--warning));
+  padding: 10px;
+  margin: 2px 0;
+  transition: width 0.3s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.side-nav-listitem:hover {
+  cursor: pointer;
+}
