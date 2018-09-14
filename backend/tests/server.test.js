@@ -9,17 +9,20 @@ const mockUsers = [{
   name: 'robert',
   username: 'rupert',
   password: 'password',
+  avatar: `https://api.adorable.io/avatars/150/robert@adorable.png`,
   admin: true
 }, {
   email: 'andreas@test.com',
   name: 'andreas',
   username: 'andreas',
-  password: 'password'
+  password: 'password',
+  avatar: `https://api.adorable.io/avatars/150/andreas@adorable.png`
 }, {
   email: 'tom@test.com',
   name: 'tom',
   username: 'tom',
-  password: 'password'
+  password: 'password',
+  avatar: `https://api.adorable.io/avatars/150/tom@adorable.png`
 }];
 let token;
 let userId;
