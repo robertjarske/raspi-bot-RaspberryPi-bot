@@ -6,11 +6,11 @@ import { Button, Input } from '../../elements';
 import './Form.css';
 
 const Form = ({
-  handleChange, // Formiks handleChange
-  handleSubmit, // Formiks handleSubmit that we use down below, can be used to show loading indicator and to check if email exists etc.
-  values, // this is the "state" where all values are stored
-  errors, // this is where all the errors are set, to call it use for example errors.email to get the email errors
-  touched, // this gets set by handleBlur and is used to not show the error message until the user is finished writing and is moving on to another field
+  handleChange,
+  handleSubmit,
+  values,
+  errors,
+  touched,
   handleBlur,
   isSubmitting,
   loginRequest,
@@ -109,7 +109,7 @@ export default withFormik({
       .required('Password is required'),
   }),
   handleSubmit(values, {
-    props, resetForm, setErrors, setSubmitting,
+    props,
   }) {
     if (props.kindof === 'signup') {
       return props.signupRequest(values);
