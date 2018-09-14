@@ -59,6 +59,17 @@ export const requestSignup = credentials => (dispatch) => {
     .catch(err => dispatch(requestAuthFail(err)));
 };
 
+export const requestUser = token => (dispatch) => {
+  authApiCall('me', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': token,
+    },
+  }).then(data => dispatch(requestAuthSuccess(data)))
+    .catch(err => dispatch(requestAuthFail(err)));
+};
+
 export const requestLogout = () => (dispatch) => {
   dispatch(requestLogoutStart());
   localStorage.removeItem('token');

@@ -7,8 +7,10 @@ import {
   REQUEST_LOGOUT_FAIL,
 } from './constants';
 
+import verifyAuth from '../../utils/verifyAuth';
+
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: verifyAuth.isLoggedIn(),
   user: {},
   isFetching: false,
 };
@@ -20,15 +22,15 @@ const authReducer = (state = initialState, action) => {
     case REQUEST_AUTH_SUCCESS:
       return {
         ...state,
+        isAuthenticated: verifyAuth.isLoggedIn(),
         user: action.payload.user,
-        isAuthenticated: true,
         isFetching: false,
       };
     case REQUEST_AUTH_FAIL:
       return {
         ...state,
-        user: {},
         isAuthenticated: false,
+        user: {},
         isFetching: false,
       };
     case REQUEST_LOGOUT_START:
@@ -43,8 +45,8 @@ const authReducer = (state = initialState, action) => {
     case REQUEST_LOGOUT_FAIL:
       return {
         ...state,
-        isAuthenticated: true,
         isFetching: false,
+        isAuthenticated: verifyAuth.isLoggedIn(),
       };
 
     default:
