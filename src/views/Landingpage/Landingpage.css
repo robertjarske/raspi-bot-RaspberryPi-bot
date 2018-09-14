@@ -13,9 +13,17 @@
   touch-action: none;
 }
 
+.landing-title {
+  position: absolute;
+  top: 150px;
+  right: 150px;
+  z-index: 10;
+  color: rgba(7,59,76, 0.7);
+}
+
 .landing-background {
   display: flex;
-  min-height: 100vh;
+  min-height: 90vh;
   min-width: 100vw;
   background: url('../../assets/dominik-scythe-414905-unsplash.jpg');
   background-size: cover;
@@ -31,7 +39,6 @@
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   height: 100%;
   width: 100%
   
@@ -50,6 +57,10 @@
   width: 100%;
 }
 
+.slider {
+  overflow: hidden;
+}
+
 .slider ol {
   display: flex;
   width: 100%;
@@ -59,7 +70,7 @@
 .slider ol [aria-current="true"]::after {
   pointer-events: none;
   cursor: auto;
-  color: var(--success)
+  color: var(--warning)
 }
 
 .slider ol li {
@@ -78,6 +89,7 @@
 
 .slider-img1, .slider-img2, .slider-img3 {
   background-size: cover;
+  background-attachment: local;
   height: 300px;
   width: 80%;
   margin-left: auto;
@@ -103,6 +115,11 @@
     clip-path: polygon(100% 0, 100% 90%, 0 100%, 0 0);
     background-attachment: scroll;
     background-size: cover;
+    min-height: 50vh;
     
+  }
+
+  .landing-title {
+    display: none;
   }
 } 
