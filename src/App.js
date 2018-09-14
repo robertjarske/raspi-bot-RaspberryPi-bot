@@ -3,14 +3,15 @@ import { Switch, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import {
-  PrivateRoute, Stream, withPublicRoot,
+  PrivateRoute, withPublicRoot,
 } from './components';
 import {
   Dashboard, Developer, Landingpage, Login, Signup, NotFound,
 } from './views';
 import isMobile from './utils/isMobile';
 import { curriedApiCall } from './utils/apiCall';
-import { requestLogin, requestLogout } from './redux/auth/actions';
+import { requestLogin, requestLogout, requestUser } from './redux/auth/actions';
+import verifyAuth from './utils/verifyAuth';
 import './App.css';
 
 
@@ -22,6 +23,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestLogin: credentials => dispatch(requestLogin(credentials)),
   requestLogout: () => dispatch(requestLogout()),
+  requestUser: token => dispatch(requestUser(token)),
 });
 
 const LandingpageWithPublic = withPublicRoot(Landingpage);
@@ -39,13 +41,18 @@ class App extends React.Component {
       activeMenu: false,
     };
 
-    this.sendCommand = this.sendCommand.bind(this);
+    // this.sendCommand = this.sendCommand.bind(this);
     this.changeMenu = this.changeMenu.bind(this);
     this.logout = this.logout.bind(this);
+    this.localStorageUpdated = this.localStorageUpdated.bind(this);
     this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
   }
 
   componentDidMount() {
+    if (verifyAuth.isLoggedIn()) {
+      this.props.requestUser(localStorage.getItem('token'));
+    }
+
     if (isMobile.any()) {
       this.setState({
         mobileDevice: true,
@@ -69,9 +76,17 @@ class App extends React.Component {
       .catch(e => console.error(e));
   }
 
-  sendCommand(direction) {
-    this.socket.emit('command', direction);
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.localStorageUpdated);
   }
+
+  localStorageUpdated() {
+    this.props.requestLogout();
+  }
+
+  // sendCommand(direction) {
+  //   this.socket.emit('command', direction);
+  // }
 
   login() {
     this.props.requestLogin({ email: 'rob@test.com', password: 'password' });
@@ -88,9 +103,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { backend, mobileDevice, activeMenu } = this.state;
-    const { isAuthenticated, user } = this.props;
-    console.log(isAuthenticated, user);
+    const { backend, activeMenu } = this.state;
+    const { isAuthenticated } = this.props;
+    window.addEventListener('storage', this.localStorageUpdated);
 
     return (
       <div className="App">
