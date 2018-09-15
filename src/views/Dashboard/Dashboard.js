@@ -26,26 +26,17 @@ const Dashboard = ({ ...props }) => (
         <div className="side-nav-divider"></div>
         <ul className="side-nav-list">
           <div>
-            <NavLink activeStyle={{
-              color: 'white',
-              fontWeight: '600',
-            }} exact to={`${props.match.url}`}>
+            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}`}>
               <li className="side-nav-listitem">
                 Profile
               </li>
             </NavLink>
-            <NavLink activeStyle={{
-              color: 'white',
-              fontWeight: '600',
-            }} exact to={`${props.match.url}/robots`}>
+            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/robots`}>
               <li className="side-nav-listitem">
                 Robots
               </li>
             </NavLink>
-            <NavLink activeStyle={{
-              color: 'white',
-              fontWeight: '600',
-            }} exact to={`${props.match.url}/activesessions`}>
+            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/activesessions`}>
               <li className="side-nav-listitem">
                 Active Sessions
               </li>
@@ -53,19 +44,13 @@ const Dashboard = ({ ...props }) => (
           </div>
           <div>
             {props.user.admin
-              ? <NavLink activeStyle={{
-                color: 'white',
-                fontWeight: '600',
-              }} exact to={`${props.match.url}/admin`}>
+              ? <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/admin`}>
                   <li className="side-nav-listitem">
                     Admin
                   </li>
                 </NavLink>
               : ''}
-            <NavLink activeStyle={{
-              color: 'white',
-              fontWeight: '600',
-            }} exact to={`${props.match.url}/developer`}>
+            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/developer`}>
               <li className="side-nav-listitem">
                 Developer
               </li>
@@ -105,7 +90,7 @@ const Dashboard = ({ ...props }) => (
           />
         </Switch>
       </div>
-  );
+);
 
 export default connect(
   mapStateToProps,

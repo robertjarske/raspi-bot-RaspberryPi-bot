@@ -41,11 +41,21 @@
   border-bottom: 15px solid transparent;
 }
 
+.side-nav-list [aria-current="page"] li {
+  background: var(--warning);
+}
+
+.active-navlink .side-nav-listitem {
+  color: var(--dark);
+  font-weight: 600
+}
+
 .side-nav-listitem {
-  width: 107.3%;
+  left: -11px;
+  width: 115%;
   height: 40px;
   position: relative;
-  background: linear-gradient(to right, var(--dark), var(--warning));
+  background: var(--dark);
   padding: 10px;
   margin: 2px 0;
   transition: width 0.3s ease;
