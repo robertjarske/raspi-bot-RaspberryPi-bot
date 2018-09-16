@@ -6,23 +6,26 @@ const User = require('../models/User');
 
 const mockUsers = [{
   email: 'rob@test.com',
-  name: 'robert',
+  name: 'Robert',
   username: 'rupert',
   password: 'password',
-  avatar: `https://api.adorable.io/avatars/150/robert@adorable.png`,
+  avatar: `https://api.adorable.io/avatars/100/robert@adorable.png`,
+  thumbnail: `https://api.adorable.io/avatars/50/robert@adorable.png`,
   admin: true
 }, {
   email: 'andreas@test.com',
-  name: 'andreas',
+  name: 'Andreas',
   username: 'andreas',
   password: 'password',
-  avatar: `https://api.adorable.io/avatars/150/andreas@adorable.png`
+  avatar: `https://api.adorable.io/avatars/100/andreas@adorable.png`,
+  thumbnail: `https://api.adorable.io/avatars/50/andreas@adorable.png`
 }, {
   email: 'tom@test.com',
-  name: 'tom',
+  name: 'Tom',
   username: 'tom',
   password: 'password',
-  avatar: `https://api.adorable.io/avatars/150/tom@adorable.png`
+  avatar: `https://api.adorable.io/avatars/100/tom@adorable.png`,
+  thumbnail: `https://api.adorable.io/avatars/50/tom@adorable.png`
 }];
 let token;
 let userId;
