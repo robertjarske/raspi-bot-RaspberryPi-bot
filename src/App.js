@@ -10,8 +10,8 @@ import {
 } from './views';
 import isMobile from './utils/isMobile';
 import { curriedApiCall } from './utils/apiCall';
-import { requestLogin, requestLogout, requestUser } from './redux/auth/actions';
 import { removeOldNotification } from './redux/notifications/actions';
+import { requestLogin, requestLogout, requestCurrentUser } from './redux/auth/actions';
 import verifyAuth from './utils/verifyAuth';
 import './App.css';
 
@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
   removeOldNotification: notification => dispatch(removeOldNotification(notification)),
   requestLogin: credentials => dispatch(requestLogin(credentials)),
   requestLogout: () => dispatch(requestLogout()),
-  requestUser: token => dispatch(requestUser(token)),
+  requestCurrentUser: token => dispatch(requestCurrentUser(token)),
 });
 
 const LandingpageWithPublic = withPublicRoot(Landingpage);
@@ -54,7 +54,7 @@ class App extends React.Component {
 
   componentDidMount() {
     if (verifyAuth.isLoggedIn()) {
-      this.props.requestUser(localStorage.getItem('token'));
+      this.props.requestCurrentUser(localStorage.getItem('token'));
     }
 
     if (isMobile.any()) {
