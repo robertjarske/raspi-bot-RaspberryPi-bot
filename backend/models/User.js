@@ -24,6 +24,7 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: [true, 'You need to register a password'], minlength: 1 },
   avatar: String,
+  thumbnail: String,
   admin: { type: Boolean, default: false },
 });
 
