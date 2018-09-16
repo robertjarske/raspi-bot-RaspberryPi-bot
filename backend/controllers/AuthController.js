@@ -26,7 +26,8 @@ router.post('/register', (req, res) => {
       username,
       email,
       password,
-      avatar: `https://api.adorable.io/avatars/150/${name}@adorable.png`,
+      avatar: `https://api.adorable.io/avatars/100/${name}@adorable.png`,
+      thumbnail: `https://api.adorable.io/avatars/50/${name}@adorable.png`,
     },
   )
     .then((user) => {
