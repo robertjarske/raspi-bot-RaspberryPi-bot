@@ -59,7 +59,7 @@ export const requestSignup = credentials => (dispatch) => {
     .catch(err => dispatch(requestAuthFail(err)));
 };
 
-export const requestUser = token => (dispatch) => {
+export const requestCurrentUser = token => (dispatch) => {
   authApiCall('me', {
     method: 'GET',
     headers: {
