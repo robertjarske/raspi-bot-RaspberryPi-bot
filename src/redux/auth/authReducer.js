@@ -11,7 +11,7 @@ import verifyAuth from '../../utils/verifyAuth';
 
 const initialState = {
   isAuthenticated: verifyAuth.isLoggedIn(),
-  user: {},
+  // user: {},
   isFetching: false,
 };
 
@@ -23,14 +23,14 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: verifyAuth.isLoggedIn(),
-        user: action.payload.user,
+        // user: action.payload.user,
         isFetching: false,
       };
     case REQUEST_AUTH_FAIL:
       return {
         ...state,
         isAuthenticated: false,
-        user: {},
+        // user: {},
         isFetching: false,
       };
     case REQUEST_LOGOUT_START:
@@ -38,7 +38,7 @@ const authReducer = (state = initialState, action) => {
     case REQUEST_LOGOUT_SUCCESS:
       return {
         ...state,
-        user: {},
+        // user: {},
         isAuthenticated: false,
         isFetching: false,
       };
