@@ -23,6 +23,7 @@ router.get('/', tokenVerify, (req, res) => {
 router.get('/:userId', tokenVerify, (req, res) => {
   const { userId } = req.params;
   const { user } = req;
+
   if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOne({ _id: userId })
@@ -62,8 +63,7 @@ router.put('/:userId', tokenVerify, (req, res) => {
   const { user } = req;
   const newUserdata = req.body;
 
-
-  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
+  if (!user.admin && !user._id === userId) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return User.findOneAndUpdate({ _id: userId },
     newUserdata,
