@@ -7,7 +7,7 @@ import './Signup.css';
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = dispatch => ({
