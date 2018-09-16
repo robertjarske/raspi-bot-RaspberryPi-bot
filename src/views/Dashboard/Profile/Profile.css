@@ -1,16 +1,44 @@
-.profile {
+.profile-page {
   width: 100%;
   display: flex;
-  justify-content: center; 
+  justify-content: flex-start; 
   align-items: flex-start; 
   color: #000; 
   padding: 50px;
 }
 
+.profile-container {
+  width: 100%;
+}
+
+.profile-name {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.profile-img-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  padding: 20px;
+  border-bottom: 1px solid var(--dark)
+}
+
 .profile-img {
-  height: 150px; 
-  width: 150px;
+  min-height: 100px; 
+  min-width: 100px;
+  margin-right: 20px;
   border-radius: 50%;
   border: 1px solid var(--dark)
   
+}
+
+.profile-info {
+  width: 40%;
+  padding: 20px;
+}
+
+.profile-info label {
+  margin-left: 5px;
 }
