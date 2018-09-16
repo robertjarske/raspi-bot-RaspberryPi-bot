@@ -8,6 +8,7 @@
   "rules": {
     "import/prefer-default-export": "off",
     "no-nested-ternary": "off",
-    "react/prop-types": [0]
+    "react/prop-types": [0],
+    "no-underscore-dangle": "off"
   }
 }
