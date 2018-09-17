@@ -1,0 +1,45 @@
+.notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 2.5rem;
+}
+
+.cross {
+  position: absolute;
+  right: 1.5rem;
+  cursor: pointer;
+}
+
+.default {
+  color: var(--default);
+  background: #fff;
+  border-color: var(--default);
+}
+
+.default:hover {
+  color: var(--dark)
+
+}
+
+.success {
+  color: #fff;
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.success:hover {
+  background: var(--success-highlight);
+}
+
+.danger {
+  color: #fff;
+  background: var(--danger);
+  border-color: var(--danger);
+}
+
+.danger:hover {
+  background: var(--danger-highlight);
+}
