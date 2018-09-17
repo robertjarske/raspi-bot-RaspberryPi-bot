@@ -68,7 +68,7 @@ router.put('/:userId', tokenVerify, (req, res) => {
   return User.findOneAndUpdate({ _id: userId },
     newUserdata,
     { new: true })
-    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully updated the user', user: updatedUser }))
+    .then(updatedUser => res.status(200).send({ msgType: 'success', msg: 'Successfully updated', user: updatedUser }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
