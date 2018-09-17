@@ -35,10 +35,14 @@
 }
 
 .profile-info {
-  width: 40%;
+  width: 30%;
   padding: 20px;
 }
 
 .profile-info label {
   margin-left: 5px;
+}
+
+.profile-admin {
+  color: var(--default)
 }

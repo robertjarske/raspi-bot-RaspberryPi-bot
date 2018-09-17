@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { requestUsers } from '../../../redux/user/actions';
+import { Loader } from '../../../components';
 import './Admin.css';
 
 const mapStateToProps = state => ({
@@ -28,7 +29,7 @@ class Admin extends React.Component {
       return (
         <div style={{
           width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black',
-        }}>Fetching Users....</div>
+        }}><Loader /></div>
       );
     }
 
