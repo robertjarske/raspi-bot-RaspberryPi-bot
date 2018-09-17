@@ -2,8 +2,10 @@
 
 :root {
   --danger: #ef476f;
+  --danger-highlight: #f37e9a;
   --warning: #ffd166;
   --success: #06d6a0;
+  --success-highlight: #69e6c6;
   --default: #118ab2;
   --dark: #073b4c;
   --box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
