@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import {
-  PrivateRoute, withPublicRoot,
+  PrivateRoute, withPublicRoot, Notifications,
 } from './components';
 import {
   Dashboard, Developer, Landingpage, Login, Signup, NotFound,
@@ -11,6 +11,7 @@ import {
 import isMobile from './utils/isMobile';
 import { curriedApiCall } from './utils/apiCall';
 import { requestLogin, requestLogout, requestUser } from './redux/auth/actions';
+import { removeOldNotification } from './redux/notifications/actions';
 import verifyAuth from './utils/verifyAuth';
 import './App.css';
 
@@ -18,9 +19,11 @@ import './App.css';
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   user: state.user.user,
+  notifications: state.notifications.messages,
 });
 
 const mapDispatchToProps = dispatch => ({
+  removeOldNotification: notification => dispatch(removeOldNotification(notification)),
   requestLogin: credentials => dispatch(requestLogin(credentials)),
   requestLogout: () => dispatch(requestLogout()),
   requestUser: token => dispatch(requestUser(token)),
@@ -43,6 +46,7 @@ class App extends React.Component {
 
     // this.sendCommand = this.sendCommand.bind(this);
     this.changeMenu = this.changeMenu.bind(this);
+    this.removeNotifications = this.removeNotifications.bind(this);
     this.logout = this.logout.bind(this);
     this.localStorageUpdated = this.localStorageUpdated.bind(this);
     this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
@@ -92,15 +96,20 @@ class App extends React.Component {
     this.props.requestLogin({ email: 'rob@test.com', password: 'password' });
   }
 
+  logout() {
+    this.props.requestLogout();
+  }
+
   changeMenu() {
     this.setState({
       activeMenu: !this.state.activeMenu,
     });
   }
 
-  logout() {
-    this.props.requestLogout();
+  removeNotifications(id) {
+    this.props.removeOldNotification(id);
   }
+
 
   render() {
     const { backend, activeMenu } = this.state;
@@ -109,6 +118,10 @@ class App extends React.Component {
 
     return (
       <div className="App">
+      <Notifications
+        notifications={this.props.notifications}
+        removeNotifications={this.removeNotifications}
+      />
       <Switch>
             <Route
               exact
@@ -167,7 +180,7 @@ class App extends React.Component {
               )}
             />
             <Route path="*" component={NotFound} />
-          </Switch>
+            </Switch>
         {/* <button
           type="submit"
           onMouseDown={() => this.sendCommand('forward')}
