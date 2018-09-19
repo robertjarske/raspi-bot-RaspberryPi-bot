@@ -7,6 +7,7 @@ import ActiveSessions from './ActiveSessions/ActiveSessions';
 import Admin from './Admin/Admin';
 import Developer from './Developer/Developer';
 import Robots from './Robots/Robots';
+import NotFound from '../NotFound/NotFound';
 import { requestLogout } from '../../redux/auth/actions';
 import './Dashboard.css';
 
@@ -88,6 +89,7 @@ const Dashboard = ({ ...props }) => (
             path={`${props.match.url}/developer`}
             render={() => <Developer user={props.user} />}
           />
+          <Route path="*" component={NotFound} />
         </Switch>
       </div>
 );
