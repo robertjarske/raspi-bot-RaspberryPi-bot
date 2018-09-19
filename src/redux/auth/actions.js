@@ -21,8 +21,9 @@ export const requestAuthFail = err => ({
 });
 
 export const requestLogoutStart = () => ({ type: REQUEST_LOGOUT_START });
-export const requestLogoutSuccess = () => ({
+export const requestLogoutSuccess = notification => ({
   type: REQUEST_LOGOUT_SUCCESS,
+  payload: notification,
 });
 
 export const requestLogin = credentials => (dispatch) => {
@@ -60,6 +61,8 @@ export const requestSignup = credentials => (dispatch) => {
 };
 
 export const requestCurrentUser = token => (dispatch) => {
+  dispatch(requestAuthStart());
+
   authApiCall('me', {
     method: 'GET',
     headers: {
@@ -73,5 +76,5 @@ export const requestCurrentUser = token => (dispatch) => {
 export const requestLogout = () => (dispatch) => {
   dispatch(requestLogoutStart());
   localStorage.removeItem('token');
-  dispatch(requestLogoutSuccess());
+  dispatch(requestLogoutSuccess({ msg: 'You successfully signed out', msgType: 'success' }));
 };
