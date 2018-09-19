@@ -5,6 +5,7 @@
   width: 30%;
   height: 100vh;
   z-index: 10;
+  pointer-events: none;
 }
 
 .notifications:nth-child(1n) div {
