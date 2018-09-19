@@ -8,6 +8,7 @@ import './Profile.css';
 
 const mapStateToProps = state => ({
   user: state.user,
+  isFetching: state.notifications.isFetching,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -66,15 +67,13 @@ class Profile extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    const { user, isFetching } = this.props.user;
-    console.log(isFetching);
+    const { user } = this.props.user;
+    const { isFetching } = this.props;
 
-    if (isFetching) { // ALWAYS FALSE?? CHECK REDUCER
+
+    if (isFetching) {
       return (
-        <div style={{
-          width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'black',
-        }}><Loader /></div>
+        <Loader />
       );
     }
 
@@ -93,19 +92,19 @@ class Profile extends React.Component {
               </div>
             </div>
             <div className="profile-info">
-            <form>
-              <h3>Update your information</h3>
-              <p>Only fill out the fields you wish to update</p>
-              <label htmlFor="name">Name</label>
-              <Input name="name" type="text" onChange={e => this.handleChange(e)} value={this.state.name} placeholder={user.name}/>
-              <label htmlFor="username">Username</label>
-              <Input name="username" type="text" onChange={e => this.handleChange(e)} value={this.state.username} placeholder={user.username}/>
-              <label htmlFor="email">Email</label>
-              <Input name="email" type="email" onChange={e => this.handleChange(e)} value={this.state.email} placeholder={user.email}/>
-              <label htmlFor="password">Password</label>
-              <Input name="password" type="password" onChange={e => this.handleChange(e)} value={this.state.password} placeholder='Password...'/>
-              <Button onClick={this.userUpdate} type="button">Submit</Button>
-            </form>
+              <form>
+                <h3 style={{ width: '300px' }}>Update your information</h3>
+                <p style={{ width: '300px' }}>Only fill out the fields you wish to update</p>
+                <label htmlFor="name">Name</label>
+                <Input name="name" type="text" onChange={e => this.handleChange(e)} value={this.state.name} placeholder={user.name}/>
+                <label htmlFor="username">Username</label>
+                <Input name="username" type="text" onChange={e => this.handleChange(e)} value={this.state.username} placeholder={user.username}/>
+                <label htmlFor="email">Email</label>
+                <Input name="email" type="email" onChange={e => this.handleChange(e)} value={this.state.email} placeholder={user.email}/>
+                <label htmlFor="password">Password</label>
+                <Input name="password" type="password" onChange={e => this.handleChange(e)} value={this.state.password} placeholder='Password...'/>
+                <Button onClick={this.userUpdate} type="button">Submit</Button>
+              </form>
             </div>
         </div> : ''}
     </div>

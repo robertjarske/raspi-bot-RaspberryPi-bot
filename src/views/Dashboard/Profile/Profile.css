@@ -37,6 +37,7 @@
 .profile-info {
   width: 30%;
   padding: 20px;
+  max-width: 300px;
 }
 
 .profile-info label {
