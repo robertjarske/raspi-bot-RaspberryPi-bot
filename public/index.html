@@ -25,7 +25,13 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div style="min-width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+        <div style="width: 400px; height: 200px; overflow: hidden;">
+          <img src="%PUBLIC_URL%/LoaderGif.gif" alt="Loader">
+        </div>
+      </div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -37,5 +43,17 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <!--<div>Icons made by <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>-->
+    <!-- <script>
+      if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./service-worker-custom.js')
+            .then(res => {
+              console.log('ServiceWorker registration successful with scope: ', res.scope);
+          }). catch(function (err) {
+            console.log('ServiceWorker registration failed: ', err);
+          })
+      } else {
+        console.log('service worker is not supported');
+      } 
+    </script> -->
   </body>
 </html>
