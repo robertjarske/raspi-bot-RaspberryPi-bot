@@ -28,6 +28,8 @@ const userSchema = mongoose.Schema({
   admin: { type: Boolean, default: false },
 });
 
+userSchema.index({ name: 'text', email: 'text', username: 'text' });
+
 userSchema.pre('save', function callback(next) {
   const user = this;
 
