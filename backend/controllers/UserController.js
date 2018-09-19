@@ -49,11 +49,21 @@ router.post('/', tokenVerify, (req, res) => {
       username,
       email,
       password,
-      avatar: `https://api.adorable.io/avatars/285/${name}@adorable.png`,
+      avatar: `https://api.adorable.io/avatars/100/${name}@adorable.png`,
+      thumbnail: `https://api.adorable.io/avatars/50/${name}@adorable.png`,
     },
   )
-    .select('-password')
-    .then(newUser => res.status(200).send({ msgType: 'success', msg: 'You successfully registered a new user', user: newUser }))
+    .then(newUser => res.status(200).send({
+      msgType: 'success',
+      msg: 'You successfully registered a new user',
+      user: {
+        name: newUser.name,
+        username: newUser.username,
+        email: newUser.email,
+        avatar: newUser.avatar,
+        thumbnail: newUser.thumbnail,
+      },
+    }))
     .catch(e => res.status(500).send({ msg: e }));
 });
 
@@ -97,6 +107,35 @@ router.delete('/:userId', tokenVerify, (req, res) => {
 
   return User.findOneAndDelete({ _id: userId })
     .then(deletedUser => res.status(200).send({ msgType: 'success', msg: 'You successfully removed the user', user: deletedUser }))
+    .catch(e => res.status(500).send({ msg: e }));
+});
+
+router.post('/search', tokenVerify, (req, res) => {
+  const { user } = req;
+  const { query } = req.body;
+
+  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
+
+  if (query === '') {
+    return User.find().select('-password').then(allUsers => res.status(200).send({ users: allUsers }))
+      .catch(e => res.status(500).send({ msg: e }));
+  }
+
+  return User.find()
+    .select('-password')
+    .then((usersFound) => {
+      const usersMatchingQuery = [];
+
+      usersFound.map((item) => {
+        if (
+          item.email.includes(query)
+          || item.name.includes(query)
+          || item.username.includes(query)
+        ) { return usersMatchingQuery.push(item); }
+        return item;
+      });
+      return res.status(200).send({ users: usersMatchingQuery });
+    })
     .catch(e => res.status(500).send({ msg: e }));
 });
 
