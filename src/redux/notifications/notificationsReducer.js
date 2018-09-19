@@ -12,29 +12,20 @@ import {
   REQUEST_UPDATE_USER_START,
   REQUEST_UPDATE_USER_SUCCESS,
   REQUEST_UPDATE_USER_FAIL,
-  // REQUEST_USERS_START,
-  // REQUEST_USERS_SUCCESS,
-  // REQUEST_USERS_FAIL,
+  REQUEST_USERS_START,
+  REQUEST_USERS_SUCCESS,
+  REQUEST_USERS_FAIL,
+  REQUEST_USER_CREATE_START,
+  REQUEST_USER_CREATE_SUCCESS,
+  REQUEST_USER_CREATE_FAIL,
+  REQUEST_USER_DELETE_START,
+  REQUEST_USER_DELETE_SUCCESS,
+  REQUEST_USER_DELETE_FAIL,
 } from '../user/constants';
 
 
 const initialState = {
-  messages: [
-    {
-      id: 1,
-      body: 'Some default text here',
-    },
-    {
-      id: 2,
-      body: 'Some success text here',
-      type: 'success',
-    },
-    {
-      id: 3,
-      body: 'Some danger text here',
-      type: 'danger',
-    },
-  ],
+  messages: [],
   isFetching: false,
   counter: 0,
 };
@@ -44,7 +35,9 @@ const notificationsReducer = (state = initialState, action) => {
     case REQUEST_AUTH_START:
     case REQUEST_LOGOUT_START:
     case REQUEST_UPDATE_USER_START:
-    // case REQUEST_USERS_START:
+    case REQUEST_USERS_START:
+    case REQUEST_USER_CREATE_START:
+    case REQUEST_USER_DELETE_START:
       return {
         ...state,
         isFetching: true,
@@ -57,13 +50,18 @@ const notificationsReducer = (state = initialState, action) => {
     case REQUEST_LOGOUT_FAIL:
     case REQUEST_UPDATE_USER_SUCCESS:
     case REQUEST_UPDATE_USER_FAIL:
-    // case REQUEST_USERS_SUCCESS:
-    // case REQUEST_USERS_FAIL:
+    case REQUEST_USERS_SUCCESS:
+    case REQUEST_USERS_FAIL:
+    case REQUEST_USER_CREATE_SUCCESS:
+    case REQUEST_USER_CREATE_FAIL:
+    case REQUEST_USER_DELETE_SUCCESS:
+    case REQUEST_USER_DELETE_FAIL:
       return {
         ...state,
         messages: [
           ...state.messages,
-          Object.assign({}, action.payload.message, { id: state.counter }),
+          Object.assign({},
+            { body: action.payload.msg }, { id: state.counter }, { type: action.payload.msgType }),
         ],
         counter: state.counter + 1,
         isFetching: false,
