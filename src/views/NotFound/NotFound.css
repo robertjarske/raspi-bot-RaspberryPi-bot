@@ -1,0 +1,18 @@
+.notfound {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.notfound-icon {
+  background: url('../../assets/lost.svg');
+  height: 200px;
+  width: 200px;
+}
+
+.notfound-text {
+  margin-top: 20px;
+}
