@@ -29,7 +29,6 @@ class WatchSession extends React.Component {
   }
 
   render() {
-    console.log(this.room);
     const { robots } = this.props;
     if (!robots.robots[0]) return <Loader />;
 
