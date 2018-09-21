@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import {
   PrivateRoute, withPublicRoot, Notifications,
@@ -12,6 +12,7 @@ import isMobile from './utils/isMobile';
 import { curriedApiCall } from './utils/apiCall';
 import { removeOldNotification } from './redux/notifications/actions';
 import { requestLogin, requestLogout, requestCurrentUser } from './redux/auth/actions';
+import { requestRobots } from './redux/robots/actions';
 import verifyAuth from './utils/verifyAuth';
 import './App.css';
 
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   requestLogin: credentials => dispatch(requestLogin(credentials)),
   requestLogout: () => dispatch(requestLogout()),
   requestCurrentUser: token => dispatch(requestCurrentUser(token)),
+  requestRobots: () => dispatch(requestRobots()),
 });
 
 const LandingpageWithPublic = withPublicRoot(Landingpage);
@@ -44,18 +46,17 @@ class App extends React.Component {
       activeMenu: false,
     };
 
-    // this.sendCommand = this.sendCommand.bind(this);
     this.changeMenu = this.changeMenu.bind(this);
     this.removeNotifications = this.removeNotifications.bind(this);
     this.logout = this.logout.bind(this);
     this.localStorageUpdated = this.localStorageUpdated.bind(this);
-    this.socket = io(`${process.env.REACT_APP_API_URL}/123`);
   }
 
   componentDidMount() {
     if (verifyAuth.isLoggedIn()) {
       this.props.requestCurrentUser(localStorage.getItem('token'));
     }
+    this.props.requestRobots();
 
     if (isMobile.any()) {
       this.setState({
@@ -87,10 +88,6 @@ class App extends React.Component {
   localStorageUpdated() {
     this.props.requestLogout();
   }
-
-  // sendCommand(direction) {
-  //   this.socket.emit('command', direction);
-  // }
 
   login() {
     this.props.requestLogin({ email: 'rob@test.com', password: 'password' });
@@ -181,38 +178,6 @@ class App extends React.Component {
             />
             <Route path="*" component={NotFound} />
             </Switch>
-        {/* <button
-          type="submit"
-          onMouseDown={() => this.sendCommand('forward')}
-          onMouseUp={() => this.sendCommand('stop')}
-        >
-          Forward
-        </button>
-        <button
-          type="submit"
-          onMouseDown={() => this.sendCommand('backward')}
-          onMouseUp={() => this.sendCommand('stop')}
-        >
-          Backward
-        </button>
-        <button
-          type="submit"
-          onMouseDown={() => this.sendCommand('left')}
-          onMouseUp={() => this.sendCommand('stop')}
-        >
-          Left
-        </button>
-        <button
-          type="submit"
-          onMouseDown={() => this.sendCommand('right')}
-          onMouseUp={() => this.sendCommand('stop')}
-        >
-          Right
-        </button>
-        <button type="submit" onClick={() => this.login()}>
-          Login
-        </button> */}
-        {/* <Stream socket={this.socket}/> */}
       </div>
     );
   }
