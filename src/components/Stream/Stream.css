@@ -1,0 +1,4 @@
+.stream-container {
+  border: 10px solid var(--success);
+  margin-top: 20px;
+}

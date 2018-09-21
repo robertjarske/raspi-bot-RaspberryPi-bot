@@ -1,8 +1,7 @@
 import React from 'react';
 import { Player } from 'broadway-player';
-import './Stream.css';
 
-class Stream extends React.Component {
+class WatchStream extends React.Component {
   constructor(props) {
     super(props);
 
@@ -11,7 +10,6 @@ class Stream extends React.Component {
       useWorker: true,
       webgl: 'true',
       workerFile: '../../Decoder.js',
-
     });
 
     this.socket.on('stream', (stream) => {
@@ -22,12 +20,11 @@ class Stream extends React.Component {
 
   componentDidMount() {
     this.ctx = this.canvasNode.getContext('2d');
-    this.socket.emit('start-stream');
   }
 
   render() {
     return (
-      <div className="stream-container">
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
         <canvas
           ref={(node) => {
             this.canvasNode = node;
@@ -40,4 +37,4 @@ class Stream extends React.Component {
   }
 }
 
-export default Stream;
+export default WatchStream;
