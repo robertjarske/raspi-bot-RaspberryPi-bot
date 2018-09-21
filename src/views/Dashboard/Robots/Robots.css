@@ -1,0 +1,54 @@
+.robots {
+  width: 100%; 
+  display: flex; 
+  justify-content: flex-start; 
+  align-items: center; 
+  color: black;
+  padding: 20px;
+}
+
+.robot-available {
+  width: 15px;
+  height: 15px;
+  background: var(--success);
+  border-radius: 50%;
+}
+.robot-unavailable {
+  width: 15px;
+  height: 15px;
+  background: var(--danger);
+  border-radius: 50%;
+}
+
+.robot-busy {
+  width: 15px;
+  height: 15px;
+  background: var(--warning);
+  border-radius: 50%;
+}
+
+.status-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-text {
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.robot-card {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  min-width: 400px;
+  max-width: 500px;
+  min-height: 200px;
+  padding: 20px;
+  border: 1px solid var(--dark);
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+}
