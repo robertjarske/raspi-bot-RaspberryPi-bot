@@ -8,6 +8,7 @@ import { DATABASE_CONNECTION } from './db/config/config';
 import AuthController from './controllers/AuthController';
 import UserController from './controllers/UserController';
 import RobotController from './controllers/RobotController';
+import PiController from './controllers/PiController';
 
 const app = express();
 const server = http.Server(app);
@@ -37,22 +38,59 @@ app.get('/', (req, res) => {
 app.use('/auth', AuthController);
 app.use('/users', UserController);
 app.use('/robots', RobotController);
+app.use('/pi', PiController);
 
 
 /* Socket */
 
-const namespace = io.of('123');
+// const namespace = io.of('123');
 
-namespace.on('connection', (socket) => {
-  console.log('someone connected', socket.id);
+// namespace.on('connection', (socket) => {
+//   console.log('someone connected', socket.id);
+
+//   socket.on('start-stream', () => {
+//     socket.broadcast.emit('start-stream');
+//   });
+
+//   socket.on('command', (cmd) => {
+//     console.log(`:::Emitting ${cmd}:::`);
+//     socket.broadcast.emit('command', cmd);
+//   });
+//   socket.on('robotMessage', (msg) => {
+//     console.log(`::::Recieved from robot ${msg}::::`);
+//   });
+//   socket.on('disconnect', () => {
+//     console.log(`::::User left ${socket.id}::::`);
+//   });
+
+//   socket.on('data', (data) => {
+//     socket.broadcast.emit('stream', data);
+//   });
+
+//   socket.on('init', (data) => {
+//     socket.broadcast.emit('init', data);
+//   });
+// });
+
+let ns;
+
+io.on('connection', (socket) => {
+  socket.on('room', (room) => {
+    ns = room;
+    socket.join(room);
+    io.sockets.in(ns).emit('message', 'what is going on, party people?');
+  });
+
+  // console.log('someone connected', socket.id);
 
   socket.on('start-stream', () => {
-    socket.broadcast.emit('start-stream');
+    console.log('start-stream');
+    io.sockets.in(ns).emit('start-stream');
   });
 
   socket.on('command', (cmd) => {
     console.log(`:::Emitting ${cmd}:::`);
-    socket.broadcast.emit('command', cmd);
+    io.sockets.in(ns).emit('command', cmd);
   });
   socket.on('robotMessage', (msg) => {
     console.log(`::::Recieved from robot ${msg}::::`);
@@ -62,13 +100,14 @@ namespace.on('connection', (socket) => {
   });
 
   socket.on('data', (data) => {
-    socket.broadcast.emit('stream', data);
+    io.sockets.in(ns).emit('stream', data);
   });
 
   socket.on('init', (data) => {
     socket.broadcast.emit('init', data);
   });
 });
+
 
 /* Init */
 const port = process.env.PORT || 8000;
