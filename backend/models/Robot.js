@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const robotSchema = mongoose.Schema({
   name: { type: String, required: true },
-  ip: { type: String, required: true },
+  url: { type: String, required: true },
   isOnline: { type: Boolean, default: false },
   isAvailable: { type: Boolean, default: false },
 });
