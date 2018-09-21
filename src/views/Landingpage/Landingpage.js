@@ -19,7 +19,7 @@ const Landingpage = () => (
         imagination to write one so I just copy the first part over and over again.</p>
       </div>
 
-      <div className="slider-container">
+       <div className="slider-container">
         <Carousel autoPlayInterval={4500} indicator={true} switcher={true}>
           <div className="slider-img1"></div>
           <div className="slider-img2"></div>
