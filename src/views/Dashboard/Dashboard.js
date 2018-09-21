@@ -8,6 +8,8 @@ import Admin from './Admin/Admin';
 import Developer from './Developer/Developer';
 import Robots from './Robots/Robots';
 import NotFound from '../NotFound/NotFound';
+import Session from './Session/Session';
+import WatchSession from './WatchSession/WatchSession';
 import { requestLogout } from '../../redux/auth/actions';
 import './Dashboard.css';
 
@@ -20,43 +22,60 @@ const mapDispatchToProps = dispatch => ({
   requestLogout: () => dispatch(requestLogout()),
 });
 
-const Dashboard = ({ ...props }) => (
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      createSessionWithRobot: {},
+    };
+
+    this.createSession = this.createSession.bind(this);
+  }
+
+  createSession(robot) {
+    this.setState({
+      createSessionWithRobot: robot,
+    });
+  }
+
+  render() {
+    return (
     <div className="dashboard">
       <aside className="side-nav">
         <Logo />
         <div className="side-nav-divider"></div>
         <ul className="side-nav-list">
           <div>
-            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}`}>
+            <NavLink activeClassName="active-navlink" exact to={`${this.props.match.url}`}>
               <li className="side-nav-listitem">
                 Profile
               </li>
             </NavLink>
-            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/robots`}>
+            <NavLink activeClassName="active-navlink" exact to={`${this.props.match.url}/robots`}>
               <li className="side-nav-listitem">
                 Robots
               </li>
             </NavLink>
-            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/activesessions`}>
+            <NavLink activeClassName="active-navlink" exact to={`${this.props.match.url}/activesessions`}>
               <li className="side-nav-listitem">
                 Active Sessions
               </li>
             </NavLink>
           </div>
           <div>
-            {props.user.admin
-              ? <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/admin`}>
+            {this.props.user.admin
+              ? <NavLink activeClassName="active-navlink" exact to={`${this.props.match.url}/admin`}>
                   <li className="side-nav-listitem">
                     Admin
                   </li>
                 </NavLink>
               : ''}
-            <NavLink activeClassName="active-navlink" exact to={`${props.match.url}/developer`}>
+            <NavLink activeClassName="active-navlink" exact to={`${this.props.match.url}/developer`}>
               <li className="side-nav-listitem">
                 Developer
               </li>
             </NavLink>
-              <li className="side-nav-listitem" onClick={() => props.requestLogout()}>
+              <li className="side-nav-listitem" onClick={() => this.props.requestLogout()}>
                 Logout
               </li>
 
@@ -66,33 +85,45 @@ const Dashboard = ({ ...props }) => (
         <Switch>
           <Route
             exact
-            path={`${props.match.url}`}
-            render={() => <Profile user={props.user} />}
+            path={`${this.props.match.url}`}
+            render={() => <Profile user={this.props.user} />}
           />
           <Route
             exact
-            path={`${props.match.url}/robots`}
-            render={() => <Robots user={props.user} />}
+            path={`${this.props.match.url}/robots`}
+            render={() => <Robots createSession={this.createSession} user={this.props.user} />}
           />
           <Route
             exact
-            path={`${props.match.url}/activesessions`}
-            render={() => <ActiveSessions user={props.user} />}
+            path={`${this.props.match.url}/activesessions`}
+            render={() => <ActiveSessions user={this.props.user} />}
           />
           <Route
             exact
-            path={`${props.match.url}/admin`}
-            render={() => <Admin user={props.user} />}
+            path={`${this.props.match.url}/session/:robotId`}
+            render={() => <Session {...this.props} user={this.props.user} />}
           />
           <Route
             exact
-            path={`${props.match.url}/developer`}
-            render={() => <Developer user={props.user} />}
+            path={`${this.props.match.url}/watchsession/:robotId`}
+            render={() => <WatchSession {...this.props} user={this.props.user} />}
+          />
+          <Route
+            exact
+            path={`${this.props.match.url}/admin`}
+            render={() => <Admin user={this.props.user} />}
+          />
+          <Route
+            exact
+            path={`${this.props.match.url}/developer`}
+            render={() => <Developer user={this.props.user} />}
           />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
-);
+    );
+  }
+}
 
 export default connect(
   mapStateToProps,
