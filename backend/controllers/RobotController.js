@@ -17,31 +17,16 @@ router.get('/', tokenVerify, (req, res) => {
     .catch(e => res.status(500).send({ msg: e }));
 });
 
-// /** Get all robots */
-// router.get('/', (req, res) => Robot.find()
-//   .then(robots => res.status(200).send({ robots }))
-//   .catch(e => res.status(500).send({ msg: e })));
-
-
 /** Get robot by id as admin */
 router.get('/:robotId', tokenVerify, (req, res) => {
   const { robotId } = req.params;
   const { user } = req;
-  if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
+  if (!user) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
   return Robot.findOne({ _id: robotId })
     .then(robotFound => res.status(200).send({ robot: robotFound }))
     .catch(e => res.status(500).send({ msg: e }));
 });
-
-// /** Get robot by id */
-// router.get('/:robotId', (req, res) => {
-//   const { robotId } = req.params;
-
-//   return Robot.findOne({ _id: robotId })
-//     .then(robotFound => res.status(200).send({ robot: robotFound }))
-//     .catch(e => res.status(500).send({ msg: e }));
-// });
 
 /** Register new robot */
 router.post('/', tokenVerify, (req, res) => {
@@ -69,11 +54,24 @@ router.put('/:robotId', tokenVerify, (req, res) => {
     .catch(e => res.status(500).send({ msg: e }));
 });
 
+router.put('/:robotId/endsession', tokenVerify, (req, res) => {
+  const { robotId } = req.params;
+  const { user } = req;
+  const newRobotdata = req.body;
+
+  if (!user) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
+
+  return Robot.findOneAndUpdate({ _id: robotId },
+    newRobotdata,
+    { new: true })
+    .then(updatedRobot => res.status(200).send({ msgType: 'success', msg: 'You successfully ended session', robot: updatedRobot }))
+    .catch(e => res.status(500).send({ msg: e }));
+});
+
 /** Delete robot */
 router.delete('/:robotId', tokenVerify, (req, res) => {
   const { robotId } = req.params;
   const { user } = req;
-
 
   if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
 
