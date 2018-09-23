@@ -1,8 +1,7 @@
 import React from 'react';
-import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { requestAlive } from '../../../redux/robots/actions';
-import { Loader, WatchStream } from '../../../components';
+import { requestAlive, requestMakeAvailable, requestRobot } from '../../../redux/robots/actions';
+import { Loader, Stream } from '../../../components';
 import './WatchSession.css';
 
 const mapStateToProps = state => ({
@@ -12,6 +11,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   requestAlive: robot => dispatch(requestAlive(robot)),
+  requestMakeAvailable: id => dispatch(requestMakeAvailable(id)),
+  requestRobot: id => dispatch(requestRobot(id)),
 });
 
 class WatchSession extends React.Component {
@@ -20,21 +21,19 @@ class WatchSession extends React.Component {
     this.state = {
       robotId: this.props.location.pathname.slice(24),
     };
-    this.socket = io(`${process.env.REACT_APP_API_URL}`);
-    this.room = this.props.location.pathname.slice(24);
+  }
 
-    this.socket.on('connect', () => {
-      this.socket.emit('room', this.room);
-    });
+  componentDidMount() {
+    this.props.requestRobot(this.state.robotId);
   }
 
   render() {
-    const { robots } = this.props;
-    if (!robots.robots[0]) return <Loader />;
+    const { robot } = this.props.robots;
+    if (!robot) return <Loader />;
 
     return (
-      <div className="watch-session">
-        <WatchStream socket={this.socket}/>
+      <div className="session">
+          <Stream robot={robot} robotId={robot._id} socket={this.socket}/>
       </div>
     );
   }
