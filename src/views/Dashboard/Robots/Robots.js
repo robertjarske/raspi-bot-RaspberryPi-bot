@@ -28,6 +28,7 @@ class Robots extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.handleCreateSession = this.handleCreateSession.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +70,10 @@ class Robots extends React.Component {
     }
   }
 
+  handleCreateSession() {
+    this.props.requestMakeUnavailable(this.state.activeRobot._id);
+  }
+
   render() {
     const { activeRobot } = this.state;
 
@@ -92,7 +97,12 @@ class Robots extends React.Component {
                       </div>
                   <h3 style={{ width: '300px' }}>{activeRobot.name}</h3>
                   <p style={{ width: '300px' }}>{activeRobot.url}</p>
-                  {activeRobot.isAvailable ? <Button><Link onClick={() => this.props.requestMakeUnavailable(activeRobot._id)} to={`/dashboard/session/${activeRobot._id}`}>Create Session</Link></Button> : <Button><Link to={`/dashboard/watchsession/${activeRobot._id}`}>Watch Session</Link></Button>}
+                  {activeRobot.isOnline
+                    ? <div>
+                      {activeRobot.isAvailable ? <Button><Link onClick={this.handleCreateSession} to={`/dashboard/session/${activeRobot._id}`}>Create Session</Link></Button> : <Button><Link to={`/dashboard/watchsession/${activeRobot._id}`}>Watch Session</Link></Button>}
+                    </div>
+
+                    : ''}
 
                 </div>
               </Modal> : ''}
