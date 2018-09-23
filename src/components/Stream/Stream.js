@@ -1,43 +1,40 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Player } from 'broadway-player';
+
+import { requestRobot } from '../../redux/robots/actions';
 import './Stream.css';
+
+const mapDispatchToProps = dispatch => ({
+  requestRobot: id => dispatch(requestRobot(id)),
+});
 
 class Stream extends React.Component {
   constructor(props) {
     super(props);
 
-    this.socket = this.props.socket;
     this.VideoPlayer = new Player({
       useWorker: true,
       webgl: 'true',
       workerFile: '../../Decoder.js',
 
     });
-
-    this.socket.on('stream', (stream) => {
-      this.VideoPlayer.decode(new Uint8ClampedArray(stream));
-      this.ctx.drawImage(this.VideoPlayer.canvas, 0, 0);
-    });
   }
 
-  componentDidMount() {
-    this.ctx = this.canvasNode.getContext('2d');
-    this.socket.emit('start-stream');
+  componentDidUpdate(prevProps) {
+    if (!prevProps.robot.streamUrl) {
+      this.props.requestRobot(this.props.robot._id);
+    }
   }
 
   render() {
+    const { streamUrl } = this.props.robot;
+    if (!streamUrl) return '';
+
     return (
-      <div className="stream-container">
-        <canvas
-          ref={(node) => {
-            this.canvasNode = node;
-          }}
-          width={1280}
-          height={900}
-        />
-      </div>
+      <iframe className="stream-canvas" src={streamUrl} frameBorder="0" scrolling="no" width={window.innerWidth} height={window.innerHeight}></iframe>
     );
   }
 }
 
-export default Stream;
+export default connect(null, mapDispatchToProps)(Stream);
