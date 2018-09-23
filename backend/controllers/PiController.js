@@ -36,7 +36,6 @@ router.post('/logout', (req, res) => {
 router.put('/', (req, res) => {
   const newRobotData = req.body;
 
-  console.log(newRobotData);
   Robot.findOneAndUpdate({ _id: newRobotData.id },
     newRobotData,
     { new: true })
