@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { requestAlive, requestMakeAvailable } from '../../../redux/robots/actions';
+import { requestAlive, requestMakeAvailable, requestRobot } from '../../../redux/robots/actions';
 import { Loader, Stream } from '../../../components';
 import { Button } from '../../../elements';
 import './Session.css';
@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestAlive: robot => dispatch(requestAlive(robot)),
   requestMakeAvailable: id => dispatch(requestMakeAvailable(id)),
+  requestRobot: id => dispatch(requestRobot(id)),
 });
 
 class Session extends React.Component {
@@ -39,43 +40,52 @@ class Session extends React.Component {
     this.props.requestMakeAvailable(this.state.robotId);
   }
 
+  componentDidMount() {
+    this.socket.emit('start-stream');
+    this.props.requestRobot(this.state.robotId);
+  }
+
   render() {
-    const { robots } = this.props;
-    if (!robots.robots[0]) return <Loader />;
+    const { robot } = this.props.robots;
+    if (!robot) return <Loader />;
 
     return (
       <div className="session">
-          <Stream robotId={this.state.robotId} socket={this.socket}/>
-        <div className="session-button-container">
-          <Button
-            type="button"
-            onMouseDown={() => this.sendCommand('forward')}
-            onMouseUp={() => this.sendCommand('stop')}
-          >
-            Forward
-          </Button>
-          <Button
-            type="button"
-            onMouseDown={() => this.sendCommand('backward')}
-            onMouseUp={() => this.sendCommand('stop')}
-          >
-            Backward
-          </Button>
-          <Button
-            type="button"
-            onMouseDown={() => this.sendCommand('left')}
-            onMouseUp={() => this.sendCommand('stop')}
-          >
-            Left
-          </Button>
-          <Button
-            type="button"
-            onMouseDown={() => this.sendCommand('right')}
-            onMouseUp={() => this.sendCommand('stop')}
-          >
-            Right
-          </Button>
-        </div>
+          <Stream robot={robot} robotId={robot._id} socket={this.socket}/>
+          <div className="session-button-container">
+              <Button
+                appearance="warning forward"
+                type="button"
+                onMouseDown={() => this.sendCommand('forward')}
+                onMouseUp={() => this.sendCommand('stop')}
+              >
+                Forward
+              </Button>
+              <Button
+                appearance="warning backward"
+                type="button"
+                onMouseDown={() => this.sendCommand('backward')}
+                onMouseUp={() => this.sendCommand('stop')}
+              >
+                Backward
+              </Button>
+              <Button
+                appearance="warning left"
+                type="button"
+                onMouseDown={() => this.sendCommand('left')}
+                onMouseUp={() => this.sendCommand('stop')}
+              >
+                Left
+              </Button>
+              <Button
+                appearance="warning right"
+                type="button"
+                onMouseDown={() => this.sendCommand('right')}
+                onMouseUp={() => this.sendCommand('stop')}
+              >
+                Right
+              </Button>
+          </div>
       </div>
     );
   }
