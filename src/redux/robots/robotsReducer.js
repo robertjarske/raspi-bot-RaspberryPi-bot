@@ -5,11 +5,18 @@ import {
   REQUEST_ROBOTS_START,
   REQUEST_ROBOTS_SUCCESS,
   REQUEST_ROBOTS_FAIL,
+  REQUEST_ROBOT_START,
+  REQUEST_ROBOT_SUCCESS,
+  REQUEST_ROBOT_FAIL,
+  REQUEST_UPDATE_ROBOT_START,
+  REQUEST_UPDATE_ROBOT_SUCCESS,
+  REQUEST_UPDATE_ROBOT_FAIL,
 } from './constants';
 
 const initialState = {
   isFetching: false,
   robots: [],
+  robot: [],
 };
 
 const robotsReducer = (state = initialState, action) => {
@@ -45,6 +52,33 @@ const robotsReducer = (state = initialState, action) => {
         isFetching: false,
       };
     case REQUEST_ROBOTS_FAIL:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case REQUEST_ROBOT_START:
+      return { ...state, isFetching: true };
+    case REQUEST_ROBOT_SUCCESS:
+      return {
+        ...state,
+        robot: action.payload.robot,
+        isFetching: false,
+      };
+    case REQUEST_ROBOT_FAIL:
+      return {
+        ...state,
+        isFetching: false,
+      };
+
+    case REQUEST_UPDATE_ROBOT_START:
+      return { ...state, isFetching: true };
+    case REQUEST_UPDATE_ROBOT_SUCCESS:
+      return {
+        ...state,
+        robot: action.payload.robot,
+        isFetching: false,
+      };
+    case REQUEST_UPDATE_ROBOT_FAIL:
       return {
         ...state,
         isFetching: false,
