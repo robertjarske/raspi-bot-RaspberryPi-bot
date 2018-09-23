@@ -1,4 +1,9 @@
 .stream-container {
-  border: 10px solid var(--success);
-  margin-top: 20px;
+  width: 100%;
+}
+
+.stream-canvas {
+  width: 77%;
+  height: 90vh;
+
 }
