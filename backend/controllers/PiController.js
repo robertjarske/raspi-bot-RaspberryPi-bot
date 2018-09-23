@@ -34,13 +34,11 @@ router.post('/logout', (req, res) => {
 
 /** Update db from robot */
 router.put('/', (req, res) => {
-  const { id, newUrl } = req.body;
+  const newRobotData = req.body;
 
-  Robot.findOneAndUpdate({ _id: id },
-    {
-      url: newUrl,
-      isOnline: true,
-    },
+  console.log(newRobotData);
+  Robot.findOneAndUpdate({ _id: newRobotData.id },
+    newRobotData,
     { new: true })
     .then(updatedRobot => res.status(200).send({ msgType: 'success', msg: 'Successfully updated', robot: updatedRobot }))
     .catch(e => res.status(500).send({ msg: e }));
