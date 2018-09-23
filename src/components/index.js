@@ -3,7 +3,6 @@ export { default as Form } from './Form/Form';
 export { default as PrivateRoute } from './PrivateRoute/PrivateRoute';
 export { default as withPublicRoot } from './withPublicRoot/withPublicRoot';
 export { default as Stream } from './Stream/Stream';
-export { default as WatchStream } from './Stream/WatchStream';
 export { default as Logo } from './Logo/Logo';
 export { default as Loader } from './Loader/Loader';
 export { default as Notifications } from './Notifications/Notifications';
