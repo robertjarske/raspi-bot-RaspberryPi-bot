@@ -57,11 +57,6 @@ const onExit = () => {
     .catch(e => console.error(e));
 };
 
-
-// tunnel.on('close', () => {
-//
-// });
-
 /** Python shell to run python script from node */
 const { PythonShell } = require('python-shell');
 require('./cleanup').Cleanup(onExit);
@@ -107,7 +102,12 @@ io.on('start-stream', () => {
       .then(res => console.log(res))
       .catch(e => console.error(e));
   });
+  
+  io.on('stop-stream', () => {
+    forked.send({stop: 'stop'});
+  })
 });
+
 
 app.get('/alive', (req, res) => res.status(200).send(JSON.stringify({ res: 'Pi says hello!' })));
 
