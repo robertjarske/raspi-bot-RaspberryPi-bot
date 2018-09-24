@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Player } from 'broadway-player';
+import { Loader } from '..';
 
 import { requestRobot } from '../../redux/robots/actions';
 import './Stream.css';
@@ -29,10 +30,10 @@ class Stream extends React.Component {
 
   render() {
     const { streamUrl } = this.props.robot;
-    if (!streamUrl) return '';
+    if (!streamUrl) return <Loader text="Waiting for video feed..." />;
 
     return (
-      <iframe className="stream-canvas" src={streamUrl} frameBorder="0" scrolling="no" width={window.innerWidth} height={window.innerHeight}></iframe>
+      <iframe title="video-stream" className="stream-canvas" src={streamUrl} frameBorder="0" scrolling="no" width={window.innerWidth} height={window.innerHeight}></iframe>
     );
   }
 }

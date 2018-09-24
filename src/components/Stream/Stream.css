@@ -3,7 +3,7 @@
 }
 
 .stream-canvas {
-  width: 77%;
-  height: 90vh;
+  width: 100%;
+  min-height: 100vh;
 
 }
