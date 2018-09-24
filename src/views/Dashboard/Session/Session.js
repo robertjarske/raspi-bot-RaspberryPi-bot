@@ -38,7 +38,7 @@ class Session extends React.Component {
 
   componentWillUnmount() {
     this.props.requestMakeAvailable(this.state.robotId);
-    // Make camera stream stop
+    this.socket.emit('stop-stream');
   }
 
   componentDidMount() {
