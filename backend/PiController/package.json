@@ -19,6 +19,7 @@
     "johnny-five": "^1.0.0",
     "localtunnel": "^1.9.1",
     "mongoose": "^5.2.9",
+    "ngrok": "^3.0.1",
     "node-fetch": "^2.2.0",
     "python-shell": "^1.0.3",
     "raspi-io": "^9.0.0",
