@@ -25,31 +25,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const localtunnel = require('localtunnel');
+const ngrok = require('ngrok');
 
-const tunnel = localtunnel(port, (err, t) => {
-  if (err) console.log(':::PI TUNNEL ERROR :::', err);
+(async function ngrokTunnel() {
+  const url = await ngrok.connect(port);
 
-  console.log('Pi is up over @: ', t.url);
+  console.log('Pi is up over @: ', url);
   fetch(`${process.env.DEV_API_URL}/pi/`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id, url: t.url, streamUrl: '' }),
+    body: JSON.stringify({ id, url, streamUrl: '' }),
   })
     .then(res => res.json())
     .then(res => console.log(res))
     .catch(e => console.error(e));
-});
+}());
 
 const onExit = () => {
-  tunnel.close();
-};
-
-
-tunnel.on('close', () => {
-  console.log('in close tunnel...');
+  console.log('in exiting state...');
   fetch(`${process.env.DEV_API_URL}/pi/logout`, {
     method: 'POST',
     headers: {
@@ -60,7 +55,12 @@ tunnel.on('close', () => {
     .then(res => res.json())
     .then(res => console.log(res))
     .catch(e => console.error(e));
-});
+};
+
+
+// tunnel.on('close', () => {
+//
+// });
 
 /** Python shell to run python script from node */
 const { PythonShell } = require('python-shell');
