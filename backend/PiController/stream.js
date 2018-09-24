@@ -46,15 +46,11 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-const localtunnel = require('localtunnel');
+const ngrok = require('ngrok');
+(async function() {
+  const url = await ngrok.connect();
 
-const tunnel = localtunnel(80, (err, t) => {
-  if (err) console.log(':::PI TUNNEL ERROR :::', err);
-
-  console.log(t.url);
-  console.log(t);
-
-  process.send({ streamUrl: t.url });
-});
+  process.send({ streamUrl: url });
+})();
 
 app.listen(80, () => console.log('Server started on 80'));
