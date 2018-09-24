@@ -146,7 +146,7 @@ class Admin extends React.Component {
     }
 
     return (
-      <div style={{ width: '100%' }}>
+      <div className="admin-container">
         {this.state.modalOpen
           ? <Modal closeModal={this.toggleModal}>
               {this.state.activeCard.name
