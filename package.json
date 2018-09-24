@@ -28,7 +28,7 @@
     "server-test": "cd backend && npm run test-watch",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "pi": "sshfs pi@192.168.0.15:nodebot backend/PiController",
+    "pi": "sshfs pi@10.126.5.78:nodebot backend/PiController",
     "dev": "concurrently --kill-others \"yarn start\" \"yarn server\""
   },
   "devDependencies": {
