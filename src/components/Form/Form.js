@@ -18,7 +18,7 @@ const Form = ({
 }) => (
   props.kindof === 'login'
     ? <form className="form-container" onSubmit={handleSubmit}>
-        <h2 className="form-heading">NodeBot Driver ❤️️</h2>
+        <h2 className="form-heading">NodeBot Driver <span role="img" aria-label="Heart">❤️️</span></h2>
         <h3>Login</h3>
         <Input
           value={values.email}
@@ -41,7 +41,7 @@ const Form = ({
       </form>
 
     : <form className="form-container" onSubmit={handleSubmit}>
-        <h2 className="form-heading">NodeBot Driver ❤️️</h2>
+        <h2 className="form-heading">NodeBot Driver <span role="img" aria-label="Heart">❤️️</span></h2>
         <h3>Create Account</h3>
         <Input
           value={values.name}
