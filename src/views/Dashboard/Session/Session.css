@@ -1,5 +1,6 @@
 .session {
   width: 100%;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -7,8 +8,8 @@
 }
 
 .session-button-container {
-  width: 67%;
-  height: 70vh;
+  width: 90%;
+  height: 100vh;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -24,20 +25,55 @@
 
 .backward {
   position: absolute;
-  bottom: 0;
+  bottom: 15px;
   pointer-events: auto;
 }
 .left {
   position: absolute;
-  left: 0;
+  left: 15px;
   top: calc(50% - 47px);
   pointer-events: auto;
 }
 .right {
   position: absolute;
-  right: 0;
+  right: 15px;
   top: calc(50% - 47px);
   pointer-events: auto;
+}
+
+@media only screen and (max-width: 1500px) {
+  .session-button-container {
+    width: 80%;
+    height: 90vh;
+  }
+}
+@media only screen and (max-width: 1300px) {
+  .session-button-container {
+    width: 70%;
+    height: 80vh;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .session-button-container {
+    width: 60%;
+    height: 70vh;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .session-button-container {
+    width: 60%;
+    height: 70vh;
+    align-items: flex-end;
+  }
+
+  .forward, .backward, .left, .right {
+    position: relative;
+    bottom: 0;
+    top: unset;
+    left: unset;
+    right: unset;
+  }
 }
 
 
