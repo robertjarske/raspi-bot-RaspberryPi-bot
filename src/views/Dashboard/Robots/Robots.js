@@ -46,7 +46,7 @@ class Robots extends React.Component {
   handleClick(robot) {
     this.aliveTimer = setInterval(() => {
       this.props.requestAlive(robot);
-    }, 10000);
+    }, 1000);
     this.setState({
       activeRobot: robot,
     });
