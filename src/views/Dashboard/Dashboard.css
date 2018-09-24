@@ -8,7 +8,6 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  align-self: flex-start;
   background-color: var(--dark);
   color: white;
   min-height: 100vh;
@@ -23,7 +22,7 @@
 }
 
 .side-nav-list {
-  height: 90vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between
@@ -67,4 +66,19 @@
 
 .side-nav-listitem:hover {
   cursor: pointer;
+}
+
+.dashboard-mobile-header {
+  background: var(--dark);
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 800px) {
+  .dashboard {
+    flex-direction: column;
+  }
 }
