@@ -2,6 +2,10 @@
   "name": "nodebot",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.2.0",
+    "node": "v10.8.0"
+  },
   "dependencies": {
     "babel-eslint": "^9.0.0",
     "broadway-player": "^0.1.1",

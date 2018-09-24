@@ -1,5 +1,4 @@
 import React from 'react';
-// import Carousel from 'react-flex-carousel';
 import './Landingpage.css';
 import Carousel from 'nuka-carousel';
 
@@ -23,7 +22,6 @@ const Landingpage = () => (
        <div className="slider-container">
           <Carousel autoplay={true} autoPlayInterval={4500} withoutControls={true} pauseOnHover={true} wrapAround={true}>
             <div className="slider-img1"></div>
-            <div className="slider-img2"></div>
             <div className="slider-img3"></div>
           </Carousel>
         </div>
