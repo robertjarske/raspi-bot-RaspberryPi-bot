@@ -41,6 +41,12 @@ app.ws('/video-stream', (ws, req) => {
   });
 });
 
+process.on('message', (msg) => {
+  if (msg.stop === 'stop') {
+    process.exit()
+  };
+});
+
 app.use((err, req, res, next) => {
   console.error(err);
   next(err);
