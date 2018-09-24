@@ -6,6 +6,7 @@
   box-shadow: var(--box-shadow);
   background-color: var(--default);
   color: #fff;
+  cursor: pointer;
 }
 
 .btn:focus {
