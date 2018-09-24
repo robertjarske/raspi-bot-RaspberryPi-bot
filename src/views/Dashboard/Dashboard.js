@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Logo } from '../../components';
+import { Logo, Menu } from '../../components';
 import Profile from './Profile/Profile';
-import ActiveSessions from './ActiveSessions/ActiveSessions';
+
 import Admin from './Admin/Admin';
-import Developer from './Developer/Developer';
+import Developer from '../Developer/Developer';
 import Robots from './Robots/Robots';
 import NotFound from '../NotFound/NotFound';
 import Session from './Session/Session';
@@ -27,9 +27,25 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       createSessionWithRobot: {},
+      width: window.innerWidth,
+      activeMenu: false,
     };
 
     this.createSession = this.createSession.bind(this);
+    this.changeMenu = this.changeMenu.bind(this);
+    this.onResize = this.onResize.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize() {
+    this.setState({ width: window.innerWidth });
   }
 
   createSession(robot) {
@@ -38,10 +54,27 @@ class Dashboard extends React.Component {
     });
   }
 
+  changeMenu() {
+    this.setState({
+      activeMenu: !this.state.activeMenu,
+    });
+  }
+
   render() {
+    const windowSmall = this.state.width <= 800;
     return (
     <div className="dashboard">
-      <aside className="side-nav">
+    {windowSmall
+      ? <header className="dashboard-mobile-header">
+          <Logo />
+          <Menu
+            requestLogout={this.props.requestLogout}
+            admin={this.props.user.admin}
+            activeMenu={this.state.activeMenu}
+            dashboardMenu={true}
+            changeMenu={this.changeMenu}/>
+        </header>
+      : <aside className="side-nav">
         <Logo />
         <div className="side-nav-divider"></div>
         <ul className="side-nav-list">
@@ -54,11 +87,6 @@ class Dashboard extends React.Component {
             <NavLink activeClassName="active-navlink" exact to={`${this.props.match.url}/robots`}>
               <li className="side-nav-listitem">
                 Robots
-              </li>
-            </NavLink>
-            <NavLink activeClassName="active-navlink" exact to={`${this.props.match.url}/activesessions`}>
-              <li className="side-nav-listitem">
-                Active Sessions
               </li>
             </NavLink>
           </div>
@@ -82,6 +110,8 @@ class Dashboard extends React.Component {
           </div>
         </ul>
         </aside>
+    }
+
         <Switch>
           <Route
             exact
@@ -92,11 +122,6 @@ class Dashboard extends React.Component {
             exact
             path={`${this.props.match.url}/robots`}
             render={() => <Robots createSession={this.createSession} user={this.props.user} />}
-          />
-          <Route
-            exact
-            path={`${this.props.match.url}/activesessions`}
-            render={() => <ActiveSessions user={this.props.user} />}
           />
           <Route
             exact
