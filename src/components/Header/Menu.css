@@ -62,5 +62,24 @@
 
 .dropdown-li {
   padding: 10px;
+  display: flex;
+  flex: 1;
+}
+
+
+.mobile {
+  margin-left: 22px;
+  display: flex;
+  flex: 1;
+}
+
+.mobile > ul:first-child {
+  margin-top: 55px;
+
+}
+
+.mobile-ul {
+  flex-direction: row;
+  max-width: 430px;
 }
 
