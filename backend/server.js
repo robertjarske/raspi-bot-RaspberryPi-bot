@@ -43,35 +43,6 @@ app.use('/pi', PiController);
 
 /* Socket */
 
-// const namespace = io.of('123');
-
-// namespace.on('connection', (socket) => {
-//   console.log('someone connected', socket.id);
-
-//   socket.on('start-stream', () => {
-//     socket.broadcast.emit('start-stream');
-//   });
-
-//   socket.on('command', (cmd) => {
-//     console.log(`:::Emitting ${cmd}:::`);
-//     socket.broadcast.emit('command', cmd);
-//   });
-//   socket.on('robotMessage', (msg) => {
-//     console.log(`::::Recieved from robot ${msg}::::`);
-//   });
-//   socket.on('disconnect', () => {
-//     console.log(`::::User left ${socket.id}::::`);
-//   });
-
-//   socket.on('data', (data) => {
-//     socket.broadcast.emit('stream', data);
-//   });
-
-//   socket.on('init', (data) => {
-//     socket.broadcast.emit('init', data);
-//   });
-// });
-
 let ns;
 
 io.on('connection', (socket) => {
@@ -81,11 +52,14 @@ io.on('connection', (socket) => {
     io.sockets.in(ns).emit('message', 'what is going on, party people?');
   });
 
-  // console.log('someone connected', socket.id);
-
   socket.on('start-stream', () => {
     console.log('start-stream');
     io.sockets.in(ns).emit('start-stream');
+  });
+  
+  socket.on('stop-stream', () => {
+    console.log('stop-stream');
+    io.sockets.in(ns).emit('stop-stream');
   });
 
   socket.on('command', (cmd) => {
