@@ -37,10 +37,11 @@ export const requestLogin = credentials => (dispatch) => {
     body: JSON.stringify(credentials),
   })
     .then((data) => {
+      console.log(data);
       localStorage.setItem('token', data.token);
       dispatch(requestAuthSuccess(data));
     })
-    .catch(err => dispatch(requestAuthFail(err)));
+    .catch(err => {console.log(err); dispatch(requestAuthFail(err))});
 };
 
 export const requestSignup = credentials => (dispatch) => {
