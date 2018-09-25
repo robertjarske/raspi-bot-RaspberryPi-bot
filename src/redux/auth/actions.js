@@ -37,9 +37,7 @@ export const requestLogin = credentials => (dispatch) => {
     body: JSON.stringify(credentials),
   })
     .then((data) => {
-      console.log(data)
       localStorage.setItem('currentUser', data.token);
-      console.log(localStorage.getItem('currentUser'));
       dispatch(requestAuthSuccess(data));
     })
     .catch(err => {console.log(err); dispatch(requestAuthFail(err))});

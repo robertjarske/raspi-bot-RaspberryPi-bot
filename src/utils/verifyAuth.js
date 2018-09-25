@@ -10,26 +10,20 @@ const verifyAuth = {
       const expiredToken = verifyAuth.checkExpired(token);
 
       if (expiredToken) {
-        debugger;
         return false;
       }
-      debugger;
+
       return true;
     }
     return false;
   },
   checkExpired: (token) => {
     try {
-      const decodedToken = decode(token);
-      debugger;
-      console.log(decodedToken);
+      const decodedToken = decode(token);    
       const now = Date.now() / 1000;
-      debugger;
-      console.log(now);
 
       if (decodedToken.exp < now) {
         console.log('expired');
-        debugger;
         return true;
       }
 
