@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const apiCall = async (url, subUrl, request) => {
-  const fetchUrl = subUrl ? `${url}/${subUrl}` : url;
+  const fetchUrl = subUrl ? `${url}${subUrl}` : url;
 
 
   const response = await fetch(fetchUrl, request);

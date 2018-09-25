@@ -49,12 +49,12 @@ class App extends React.Component {
     this.changeMenu = this.changeMenu.bind(this);
     this.removeNotifications = this.removeNotifications.bind(this);
     this.logout = this.logout.bind(this);
-    this.localStorageUpdated = this.localStorageUpdated.bind(this);
+    // this.localStorageUpdated = this.localStorageUpdated.bind(this);
   }
 
   componentDidMount() {
     if (verifyAuth.isLoggedIn()) {
-      this.props.requestCurrentUser(localStorage.getItem('token'));
+      this.props.requestCurrentUser(localStorage.getItem('currentUser'));
     }
     this.props.requestRobots();
 
@@ -82,12 +82,12 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('storage', this.localStorageUpdated);
+    // window.removeEventListener('storage', this.localStorageUpdated);
   }
 
-  localStorageUpdated() {
-    this.props.requestLogout();
-  }
+  // localStorageUpdated() {
+  //   this.props.requestLogout();
+  // }
 
   login() {
     this.props.requestLogin({ email: 'rob@test.com', password: 'password' });
@@ -111,7 +111,7 @@ class App extends React.Component {
   render() {
     const { backend, activeMenu } = this.state;
     const { isAuthenticated } = this.props;
-    window.addEventListener('storage', this.localStorageUpdated);
+    // window.addEventListener('storage', this.localStorageUpdated);
 
     return (
       <div className="App">

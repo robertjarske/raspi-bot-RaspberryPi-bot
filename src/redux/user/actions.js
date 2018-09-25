@@ -43,7 +43,7 @@ export const requestUsers = () => (dispatch) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
   })
     .then(data => dispatch(requestUsersSuccess(data)))
@@ -70,7 +70,7 @@ export const requestUserCreate = userData => (dispatch) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
     body: JSON.stringify(userData),
   })
@@ -98,7 +98,7 @@ export const requestUserDelete = userData => (dispatch) => {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
     body: JSON.stringify(userData),
   })
@@ -128,7 +128,7 @@ export const requestUserUpdate = userData => (dispatch) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
     body: JSON.stringify(userData),
   })
@@ -157,7 +157,7 @@ export const requestAdminUserUpdate = userData => (dispatch) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
     body: JSON.stringify(userData),
   })
@@ -185,7 +185,7 @@ export const requestSearch = query => (dispatch) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
     body: JSON.stringify({ query }),
   })

@@ -18,7 +18,6 @@ import { curriedApiCall } from '../../utils/apiCall';
 
 const robotApiCall = curriedApiCall(`${process.env.REACT_APP_API_URL}/robots`);
 
-/** Get all users(admin) */
 export const requestAliveStart = () => ({ type: REQUEST_ALIVE_START });
 
 export const requestAliveSuccess = data => ({
@@ -64,7 +63,7 @@ export const requestRobots = () => (dispatch) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
   })
     .then(data => dispatch(requestRobotsSuccess(data)))
@@ -89,7 +88,7 @@ export const requestRobot = id => (dispatch) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
   })
     .then(data => dispatch(requestRobotSuccess(data)))
@@ -116,7 +115,7 @@ export const requestMakeUnavailable = id => (dispatch) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
     body: JSON.stringify({ isAvailable: false }),
   })
@@ -143,7 +142,7 @@ export const requestMakeAvailable = id => (dispatch) => {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': localStorage.getItem('token'),
+      'x-access-token': localStorage.getItem('currentUser'),
     },
     body: JSON.stringify({ isAvailable: true, streamUrl: '' }),
   })

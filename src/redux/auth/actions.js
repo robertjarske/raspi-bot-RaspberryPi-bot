@@ -29,7 +29,7 @@ export const requestLogoutSuccess = notification => ({
 export const requestLogin = credentials => (dispatch) => {
   dispatch(requestAuthStart());
 
-  authApiCall('login', {
+  authApiCall('/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,8 +37,9 @@ export const requestLogin = credentials => (dispatch) => {
     body: JSON.stringify(credentials),
   })
     .then((data) => {
-      console.log(data);
-      localStorage.setItem('token', data.token);
+      console.log(data)
+      localStorage.setItem('currentUser', data.token);
+      console.log(localStorage.getItem('currentUser'));
       dispatch(requestAuthSuccess(data));
     })
     .catch(err => {console.log(err); dispatch(requestAuthFail(err))});
@@ -47,7 +48,7 @@ export const requestLogin = credentials => (dispatch) => {
 export const requestSignup = credentials => (dispatch) => {
   dispatch(requestAuthStart());
 
-  authApiCall('register', {
+  authApiCall('/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ export const requestSignup = credentials => (dispatch) => {
     body: JSON.stringify(credentials),
   })
     .then((data) => {
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('currentUser', data.token);
       dispatch(requestAuthSuccess(data));
     })
     .catch(err => dispatch(requestAuthFail(err)));
@@ -64,7 +65,7 @@ export const requestSignup = credentials => (dispatch) => {
 export const requestCurrentUser = token => (dispatch) => {
   dispatch(requestAuthStart());
 
-  authApiCall('me', {
+  authApiCall('/me', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -76,6 +77,6 @@ export const requestCurrentUser = token => (dispatch) => {
 
 export const requestLogout = () => (dispatch) => {
   dispatch(requestLogoutStart());
-  localStorage.removeItem('token');
+  localStorage.removeItem('currentUser');
   dispatch(requestLogoutSuccess({ msg: 'You successfully signed out', msgType: 'success' }));
 };
