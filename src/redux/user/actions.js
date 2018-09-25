@@ -124,7 +124,7 @@ export const requestUserUpdateFail = err => ({
 export const requestUserUpdate = userData => (dispatch) => {
   dispatch(requestUserUpdateStart());
 
-  userApiCall(userData.id, {
+  userApiCall(`/${userData.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
