@@ -3,6 +3,7 @@ import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import socketIO from 'socket.io';
+import morgan from 'morgan';
 import mongoose from 'mongoose';
 import { DATABASE_CONNECTION } from './db/config/config';
 import AuthController from './controllers/AuthController';
@@ -18,6 +19,8 @@ const io = socketIO(server);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(morgan('combined'));
+
 
 /* DB */
 mongoose.Promise = global.Promise;
