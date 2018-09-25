@@ -20,6 +20,10 @@ var _socket = require('socket.io');
 
 var _socket2 = _interopRequireDefault(_socket);
 
+var _morgan = require('morgan');
+
+var _morgan2 = _interopRequireDefault(_morgan);
+
 var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
@@ -52,6 +56,7 @@ const io = (0, _socket2.default)(server);
 app.use((0, _cors2.default)());
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
+app.use((0, _morgan2.default)('combined'));
 
 /* DB */
 _mongoose2.default.Promise = global.Promise;
