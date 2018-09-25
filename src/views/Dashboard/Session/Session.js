@@ -26,6 +26,7 @@ class Session extends React.Component {
     this.socket = io(`${process.env.REACT_APP_API_URL}`);
     this.room = this.props.location.pathname.slice(19);
     this.sendCommand = this.sendCommand.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
 
     this.socket.on('connect', () => {
       this.socket.emit('room', this.room);
@@ -36,12 +37,37 @@ class Session extends React.Component {
     this.socket.emit('command', direction);
   }
 
+  handleKeyPress = (event) => {
+    if (event.type === 'keyup') return this.sendCommand('stop');
+    switch (event.key) {
+      case 'ArrowUp':
+        this.sendCommand('forward');
+        break;
+      case 'ArrowDown':
+        this.sendCommand('backward');
+        break;
+      case 'ArrowLeft':
+        this.sendCommand('left');
+        break;
+      case 'ArrowRight':
+        this.sendCommand('right');
+        break;
+      default:
+        this.sendCommand('stop');
+    }
+    return event;
+  }
+
   componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyPress);
+    window.removeEventListener('keyup', this.handleKeyPress);
     this.props.requestMakeAvailable(this.state.robotId);
     this.socket.emit('stop-stream');
   }
 
   componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyPress);
+    window.addEventListener('keyup', this.handleKeyPress);
     this.socket.emit('start-stream');
     this.props.requestRobot(this.state.robotId);
   }

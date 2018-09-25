@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Player } from 'broadway-player';
+import WSAvcPlayer from 'h264-live-player';
 import { Loader } from '..';
 
 import { requestRobot } from '../../redux/robots/actions';
@@ -13,19 +13,25 @@ const mapDispatchToProps = dispatch => ({
 class Stream extends React.Component {
   constructor(props) {
     super(props);
-
-    this.VideoPlayer = new Player({
-      useWorker: true,
-      webgl: 'true',
-      workerFile: '../../Decoder.js',
-
-    });
+    this.state = {
+      streamStarted: false,
+    };
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.robot.streamUrl) {
-      this.props.requestRobot(this.props.robot._id);
+      return this.props.requestRobot(this.props.robot._id);
     }
+    if (prevProps.robot.streamUrl && !this.state.streamStarted) {
+      this.setState({
+        streamStarted: true,
+      });
+      const canvas = document.querySelector('#player');
+      const wsavc = new WSAvcPlayer(canvas, 'webgl');
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      wsavc.connect(`${protocol}//${this.props.robot.streamUrl}`);
+    }
+    return true;
   }
 
   render() {
@@ -33,7 +39,7 @@ class Stream extends React.Component {
     if (!streamUrl) return <Loader text="Waiting for video feed..." />;
 
     return (
-      <iframe title="video-stream" className="stream-canvas" src={streamUrl} frameBorder="0" scrolling="no" width={window.innerWidth} height={window.innerHeight}></iframe>
+      <canvas className="stream-canvas" id="player" />
     );
   }
 }
