@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Loader } from '..';
-
 import { requestRobot } from '../../redux/robots/actions';
 import './Stream.css';
 
@@ -17,7 +16,6 @@ class Stream extends React.Component {
     this.state = {
       streamStarted: false,
     };
-
   }
 
   componentDidUpdate(prevProps) {
