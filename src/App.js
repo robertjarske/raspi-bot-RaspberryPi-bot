@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-// import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import {
   PrivateRoute, withPublicRoot, Notifications,
@@ -9,7 +8,6 @@ import {
   Dashboard, Developer, Landingpage, Login, Signup, NotFound,
 } from './views';
 import isMobile from './utils/isMobile';
-import { curriedApiCall } from './utils/apiCall';
 import { removeOldNotification } from './redux/notifications/actions';
 import { requestLogin, requestLogout, requestCurrentUser } from './redux/auth/actions';
 import { requestRobots } from './redux/robots/actions';
@@ -49,12 +47,9 @@ class App extends React.Component {
     this.changeMenu = this.changeMenu.bind(this);
     this.removeNotifications = this.removeNotifications.bind(this);
     this.logout = this.logout.bind(this);
-    // this.localStorageUpdated = this.localStorageUpdated.bind(this);
   }
 
   componentDidMount() {
-    // window.addEventListener('storage', this.localStorageUpdated);
-
     if (verifyAuth.isLoggedIn()) {
       this.props.requestCurrentUser(localStorage.getItem('currentUser'));
     }
@@ -69,28 +64,7 @@ class App extends React.Component {
         mobileDevice: false,
       });
     }
-
-    curriedApiCall(process.env.REACT_APP_API_URL)(null, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        this.setState({
-          backend: res.res,
-        });
-      })
-      .catch(e => console.error(e));
   }
-
-  componentWillUnmount() {
-    // window.removeEventListener('storage', this.localStorageUpdated);
-  }
-
-  // localStorageUpdated() {
-  //   console.log('Don\'t touch that!')
-  //   this.props.requestLogout();
-  // }
 
   logout() {
     this.props.requestLogout();
