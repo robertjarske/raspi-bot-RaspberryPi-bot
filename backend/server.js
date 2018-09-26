@@ -3,7 +3,6 @@ import http from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import socketIO from 'socket.io';
-import morgan from 'morgan';
 import mongoose from 'mongoose';
 import { DATABASE_CONNECTION } from './db/config/config';
 import AuthController from './controllers/AuthController';
@@ -20,7 +19,6 @@ const io = socketIO(server);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(morgan('combined'));
 
 
 /* DB */
@@ -56,14 +54,14 @@ io.on('connection', (socket) => {
     console.log('::::::ROOOM::::::', room);
     ns = room;
     socket.join(room);
-    io.sockets.in(ns).emit('message', 'what is going on, party people?');
+    io.sockets.in(ns).emit('message', `You joined room ${ns}`);
   });
 
   socket.on('start-stream', (id) => {
     console.log('::::::START STREAM:::::', id);
     driver = socket.id;
     robotId = id;
-    console.log('start-stream');
+    console.log(':::::DRIVER IN START STREAM:::::', driver);
     io.sockets.in(ns).emit('start-stream');
   });
 
@@ -80,8 +78,9 @@ io.on('connection', (socket) => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
-    console.log('DRIVER', driver);
+    console.log(':::::DRIVER IN DISCONNECT:::::', driver);
     if (socket.id === driver) {
+      console.log('::::DRIVER DISCONNECTED:::');
       return Robot.findOneAndUpdate({ _id: robotId },
         { isAvailable: true },
         { new: true })
@@ -89,6 +88,7 @@ io.on('connection', (socket) => {
         .catch(err => console.error(err));
     }
     console.log(`::::User left ${socket.id}::::`);
+    return true;
   });
 
   socket.on('data', (data) => {

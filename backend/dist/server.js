@@ -20,10 +20,6 @@ var _socket = require('socket.io');
 
 var _socket2 = _interopRequireDefault(_socket);
 
-var _morgan = require('morgan');
-
-var _morgan2 = _interopRequireDefault(_morgan);
-
 var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
@@ -60,8 +56,6 @@ const io = (0, _socket2.default)(server);
 app.use((0, _cors2.default)());
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
-// app.use(morgan('combined'));
-
 
 /* DB */
 _mongoose2.default.Promise = global.Promise;
@@ -92,14 +86,14 @@ io.on('connection', socket => {
     console.log('::::::ROOOM::::::', room);
     ns = room;
     socket.join(room);
-    io.sockets.in(ns).emit('message', 'what is going on, party people?');
+    io.sockets.in(ns).emit('message', `You joined room ${ns}`);
   });
 
   socket.on('start-stream', id => {
     console.log('::::::START STREAM:::::', id);
     driver = socket.id;
     robotId = id;
-    console.log('start-stream');
+    console.log(':::::DRIVER IN START STREAM:::::', driver);
     io.sockets.in(ns).emit('start-stream');
   });
 
@@ -116,11 +110,13 @@ io.on('connection', socket => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
-    console.log('DRIVER', driver);
+    console.log(':::::DRIVER IN DISCONNECT:::::', driver);
     if (socket.id === driver) {
+      console.log('::::DRIVER DISCONNECTED:::');
       return _Robot2.default.findOneAndUpdate({ _id: robotId }, { isAvailable: true }, { new: true }).then(updatedRobot => console.log('HERE', updatedRobot)).catch(err => console.error(err));
     }
     console.log(`::::User left ${socket.id}::::`);
+    return true;
   });
 
   socket.on('data', data => {
