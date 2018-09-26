@@ -74,7 +74,7 @@ router.post('/login', (req, res) => {
         });
       }
 
-      const isValidPassword = bcrypt.compare(password, user.password);
+      const isValidPassword = bcrypt.compareSync(password, user.password);
 
       if (!isValidPassword) {
         return res.status(401).send({
