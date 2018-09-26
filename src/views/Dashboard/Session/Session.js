@@ -24,7 +24,7 @@ class Session extends React.Component {
       robotId: this.props.location.pathname.slice(19),
     };
     this.socket = io(`${process.env.REACT_APP_API_URL}`);
-    this.room = this.props.location.pathname.slice(19); // I DONT RECIEVE THIS IN BACKEND!!!!!!
+    this.room = this.props.location.pathname.slice(19);
     this.sendCommand = this.sendCommand.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
 
@@ -75,7 +75,6 @@ class Session extends React.Component {
   render() {
     const { robot } = this.props.robots;
     if (!robot) return <Loader />;
-    console.log(this.room);
     return (
       <div className="session">
           <Stream robot={robot} robotId={robot._id} socket={this.socket}/>
