@@ -3,12 +3,19 @@ const expect = require('expect');
 const request = require('supertest');
 const server = require('../server');
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
+
+function hasher(password) {
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  return hashedPassword;
+
+}
 
 const mockUsers = [{
   email: 'rob@test.com',
   name: 'Robert',
   username: 'rupert',
-  password: 'password',
+  password: hasher('password'),
   avatar: `https://api.adorable.io/avatars/100/robert@adorable.png`,
   thumbnail: `https://api.adorable.io/avatars/50/robert@adorable.png`,
   admin: true
@@ -16,14 +23,14 @@ const mockUsers = [{
   email: 'andreas@test.com',
   name: 'Andreas',
   username: 'andreas',
-  password: 'password',
+  password: hasher('password'),
   avatar: `https://api.adorable.io/avatars/100/andreas@adorable.png`,
   thumbnail: `https://api.adorable.io/avatars/50/andreas@adorable.png`
 }, {
   email: 'tom@test.com',
   name: 'Tom',
   username: 'tom',
-  password: 'password',
+  password: hasher('password'),
   avatar: `https://api.adorable.io/avatars/100/tom@adorable.png`,
   thumbnail: `https://api.adorable.io/avatars/50/tom@adorable.png`
 }];
