@@ -21,15 +21,14 @@ class Session extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      robotId: this.props.location.pathname.slice(51),
+      robotId: this.props.location.pathname.slice(19),
     };
     this.socket = io(`${process.env.REACT_APP_API_URL}`);
-    this.room = this.props.location.pathname.slice(51);
+    this.room = this.props.location.pathname.slice(19);
     this.sendCommand = this.sendCommand.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
 
     this.socket.on('connect', () => {
-      console.log(this.room);
       this.socket.emit('room', this.room);
     });
   }
@@ -76,6 +75,7 @@ class Session extends React.Component {
   render() {
     const { robot } = this.props.robots;
     if (!robot) return <Loader />;
+    console.log(this.room);
 
     return (
       <div className="session">
