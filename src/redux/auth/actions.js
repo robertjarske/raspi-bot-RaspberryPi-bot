@@ -40,7 +40,7 @@ export const requestLogin = credentials => (dispatch) => {
       localStorage.setItem('currentUser', data.token);
       dispatch(requestAuthSuccess(data));
     })
-    .catch(err => {console.log(err); dispatch(requestAuthFail(err))});
+    .catch(err => dispatch(requestAuthFail(err)));
 };
 
 export const requestSignup = credentials => (dispatch) => {
