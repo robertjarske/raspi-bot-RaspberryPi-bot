@@ -74,14 +74,6 @@ io.on('connection', (socket) => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
-    const origin = socket.handshake.headers.origin;
-
-    if(origin === 'https://rjenodebot.herokuapp.com') {
-      const robotId = socket.handshake.headers.referer.slice(41);
-
-      Robot.findByIdAndUpdate(robotId, {isAvailable: true}, {new: true}).then(updatedRobot => console.log(updatedRobot)).catch(err => console.error(err))
-    }
-
     console.log(`::::User left ${socket.id}::::`);
   });
 
