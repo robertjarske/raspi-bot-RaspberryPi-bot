@@ -28,6 +28,9 @@ const Form = ({
           type="email"
           placeholder="Email..."
         />
+        <div className="form-error-container">
+          {touched.email && errors.email ? errors.email : ''}
+        </div>
         <Input
           value={values.password}
           onChange={handleChange}
@@ -36,6 +39,9 @@ const Form = ({
           type="password"
           placeholder="Password..."
           />
+          <div className="form-error-container">
+            {touched.password && errors.password ? errors.password : ''}
+          </div>
         <Button appearance={'success'} type="submit">Login</Button>
         <p>No account? Go to <Link to="/signup" style={{ color: '#118ab2' }}>Signup</Link> to create one</p>
       </form>
@@ -51,6 +57,9 @@ const Form = ({
           type="name"
           placeholder="Name"
         />
+        <div className="form-error-container">
+          {touched.name && errors.name ? errors.name : ''}
+        </div>
         <Input
           value={values.username}
           onChange={handleChange}
@@ -59,6 +68,9 @@ const Form = ({
           type="username"
           placeholder="Username"
         />
+        <div className="form-error-container">
+          {touched.username && errors.username ? errors.username : ''}
+        </div>
         <Input
           value={values.email}
           onChange={handleChange}
@@ -67,6 +79,9 @@ const Form = ({
           type="email"
           placeholder="Email"
         />
+        <div className="form-error-container">
+          {touched.email && errors.email ? errors.email : ''}
+        </div>
         <Input
           value={values.password}
           onChange={handleChange}
@@ -75,6 +90,9 @@ const Form = ({
           type="password"
           placeholder="Password"
           />
+          <div className="form-error-container">
+            {touched.password && errors.password ? errors.password : ''}
+          </div>
         <Button type="submit">Create Account</Button>
         <p>Already have an account? Go to <Link to="/login" style={{ color: '#118ab2' }}>Login</Link> to get going</p>
       </form>
@@ -82,6 +100,7 @@ const Form = ({
 );
 
 export default withFormik({
+  validateOnChange: false,
   mapPropsToValues(props) {
     if (props.kindof === 'signup') {
       return {

@@ -17,6 +17,13 @@
   padding-bottom: 150px;
 }
 
+.form-error-container {
+  color: var(--danger);
+  text-align: center;
+  height: 20px;
+  width: 300px;
+}
+
 @media only screen and (max-width: 850px) {
   .form-container {
     width: 100%;
