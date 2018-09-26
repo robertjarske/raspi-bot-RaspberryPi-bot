@@ -60,7 +60,8 @@ const io = (0, _socket2.default)(server);
 app.use((0, _cors2.default)());
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
-app.use((0, _morgan2.default)('combined'));
+// app.use(morgan('combined'));
+
 
 /* DB */
 _mongoose2.default.Promise = global.Promise;
@@ -88,13 +89,14 @@ let robotId;
 
 io.on('connection', socket => {
   socket.on('room', room => {
-    console.log(room);
+    console.log('::::::ROOOM::::::', room);
     ns = room;
     socket.join(room);
     io.sockets.in(ns).emit('message', 'what is going on, party people?');
   });
 
   socket.on('start-stream', id => {
+    console.log('::::::START STREAM:::::', id);
     driver = socket.id;
     robotId = id;
     console.log('start-stream');
@@ -114,6 +116,7 @@ io.on('connection', socket => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
+    console.log('DRIVER', driver);
     if (socket.id === driver) {
       return _Robot2.default.findOneAndUpdate({ _id: robotId }, { isAvailable: true }, { new: true }).then(updatedRobot => console.log('HERE', updatedRobot)).catch(err => console.error(err));
     }
