@@ -91,7 +91,7 @@ class App extends React.Component {
         notifications={this.props.notifications}
         removeNotifications={this.removeNotifications}
       />
-      <Switch>
+        <Switch>
             <Route
               exact
               path="/"
@@ -149,7 +149,7 @@ class App extends React.Component {
               )}
             />
             <Route path="*" component={NotFound} />
-            </Switch>
+          </Switch>
       </div>
     );
   }
