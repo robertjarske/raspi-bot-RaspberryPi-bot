@@ -4,8 +4,8 @@ import Notification from './Notification';
 import './Notifications.css';
 
 class Notifications extends React.Component {
-  constructor({ position = 'bottomRight', ...props }) {
-    super(...props);
+  constructor({ position = 'bottomRight', props }) {
+    super(props);
 
     this.position = position;
 

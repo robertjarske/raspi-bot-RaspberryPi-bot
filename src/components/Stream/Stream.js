@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import WSAvcPlayer from 'h264-live-player';
 import { Loader } from '..';
 
 import { requestRobot } from '../../redux/robots/actions';
 import './Stream.css';
+
+const WSAvcPlayer = window.WSAvcPlayer; // SUPER DUPER MEGA UGLY
 
 const mapDispatchToProps = dispatch => ({
   requestRobot: id => dispatch(requestRobot(id)),
@@ -16,6 +17,7 @@ class Stream extends React.Component {
     this.state = {
       streamStarted: false,
     };
+
   }
 
   componentDidUpdate(prevProps) {
