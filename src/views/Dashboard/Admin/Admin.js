@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  requestUsers, requestUserCreate, requestUserDelete, requestAdminUserUpdate, requestSearch,
+  requestUsers,
+  requestUserCreate,
+  requestUserDelete,
+  requestAdminUserUpdate,
+  requestSearch,
+  requestMakeUserAdmin,
 } from '../../../redux/user/actions';
 import { Loader, Modal } from '../../../components';
 import { Button, Input } from '../../../elements';
@@ -18,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   requestUserDelete: userData => dispatch(requestUserDelete(userData)),
   requestAdminUserUpdate: userData => dispatch(requestAdminUserUpdate(userData)),
   requestSearch: query => dispatch(requestSearch(query)),
+  requestMakeUserAdmin: id => dispatch(requestMakeUserAdmin(id)),
 });
 
 class Admin extends React.Component {
@@ -42,6 +48,7 @@ class Admin extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.sendSearch = this.sendSearch.bind(this);
+    this.userAdminHandler = this.userAdminHandler.bind(this);
   }
 
   componentDidMount() {
@@ -118,6 +125,11 @@ class Admin extends React.Component {
     this.toggleModal(null, true);
   }
 
+  userAdminHandler(id) {
+    this.props.requestMakeUserAdmin(id);
+    this.toggleModal(null, true);
+  }
+
   sendSearch() {
     return this.props.requestSearch(this.state.query);
   }
@@ -133,9 +145,9 @@ class Admin extends React.Component {
     });
   }
 
-
   render() {
     const { users } = this.props.user;
+    const currentUser = this.props.user.user;
     const { isFetching } = this.props;
     const { activeCard } = this.state;
 
@@ -163,7 +175,10 @@ class Admin extends React.Component {
                     <Input name="email" type="email" onChange={e => this.handleChange(e)} value={this.state.email} placeholder={activeCard.email}/>
                     <label htmlFor="password">Password</label>
                     <Input name="password" type="password" onChange={e => this.handleChange(e)} value={this.state.password} placeholder='Password...'/>
-                    <Button onClick={this.userUpdate} type="button">Submit</Button>
+                    <div className="admin-modal-button-container">
+                      <Button onClick={this.userUpdate} type="button">Submit</Button>
+                      {!activeCard.admin ? <Button appearance="success" onClick={() => this.userAdminHandler(activeCard._id)} type="button">Make User Admin</Button> : ''}
+                    </div>
                   </form>
                 </div>
                 : <form>
@@ -212,7 +227,7 @@ class Admin extends React.Component {
                 {user.admin ? <p className="admin-indicator">Admin</p> : ''}
                 <p>{user.email}</p>
                 </div>
-                <Button onClick={() => this.deleteUser(user)} appearance="danger">Delete User</Button>
+                {currentUser._id === user._id ? '' : <Button onClick={() => this.deleteUser(user)} appearance="danger">Delete User</Button>}
             </div>
           ))}
 
