@@ -48,15 +48,20 @@ app.use('/pi', PiController);
 /* Socket */
 
 let ns;
+let driver;
+let robotId;
 
 io.on('connection', (socket) => {
   socket.on('room', (room) => {
+    console.log(room);
     ns = room;
     socket.join(room);
     io.sockets.in(ns).emit('message', 'what is going on, party people?');
   });
 
-  socket.on('start-stream', () => {
+  socket.on('start-stream', (id) => {
+    driver = socket.id;
+    robotId = id;
     console.log('start-stream');
     io.sockets.in(ns).emit('start-stream');
   });
@@ -74,6 +79,13 @@ io.on('connection', (socket) => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
+    if (socket.id === driver) {
+      Robot.findOneAndUpdate({ _id: robotId },
+        { isAvailable: true },
+        { new: true })
+        .then(updatedRobot => console.log(updatedRobot))
+        .catch(err => console.error(err));
+    }
     console.log(`::::User left ${socket.id}::::`);
   });
 

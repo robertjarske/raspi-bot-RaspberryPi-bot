@@ -68,7 +68,7 @@ class Session extends React.Component {
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyPress);
     window.addEventListener('keyup', this.handleKeyPress);
-    this.socket.emit('start-stream');
+    this.socket.emit('start-stream', this.room);
     this.props.requestRobot(this.state.robotId);
   }
 
