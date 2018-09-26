@@ -46,6 +46,10 @@ var _PiController = require('./controllers/PiController');
 
 var _PiController2 = _interopRequireDefault(_PiController);
 
+var _Robot = require('./models/Robot');
+
+var _Robot2 = _interopRequireDefault(_Robot);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const app = (0, _express2.default)();
@@ -105,7 +109,14 @@ io.on('connection', socket => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
-    console.log(socket.handshake.headers.origin);
+    const origin = socket.handshake.headers.origin;
+
+    if (origin === 'https://rjenodebot.herokuapp.com') {
+      const robotId = socket.handshake.headers.referer.slice(41);
+
+      _Robot2.default.findByIdAndUpdate(robotId, { isAvailable: true }, { new: true }).then(updatedRobot => console.log(updatedRobot)).catch(err => console.error(err));
+    }
+
     console.log(`::::User left ${socket.id}::::`);
   });
 

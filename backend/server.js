@@ -10,6 +10,7 @@ import AuthController from './controllers/AuthController';
 import UserController from './controllers/UserController';
 import RobotController from './controllers/RobotController';
 import PiController from './controllers/PiController';
+import Robot from './models/Robot';
 
 const app = express();
 const server = http.Server(app);
@@ -73,7 +74,14 @@ io.on('connection', (socket) => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
-    console.log(socket.handshake.headers.origin)
+    const origin = socket.handshake.headers.origin;
+
+    if(origin === 'https://rjenodebot.herokuapp.com') {
+      const robotId = socket.handshake.headers.referer.slice(41);
+
+      Robot.findByIdAndUpdate(robotId, {isAvailable: true}, {new: true}).then(updatedRobot => console.log(updatedRobot)).catch(err => console.error(err))
+    }
+
     console.log(`::::User left ${socket.id}::::`);
   });
 
