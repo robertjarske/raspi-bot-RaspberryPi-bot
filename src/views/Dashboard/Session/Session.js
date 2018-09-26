@@ -21,14 +21,15 @@ class Session extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      robotId: this.props.location.pathname.slice(19),
+      robotId: this.props.location.pathname.slice(51),
     };
     this.socket = io(`${process.env.REACT_APP_API_URL}`);
-    this.room = this.props.location.pathname.slice(19);
+    this.room = this.props.location.pathname.slice(51);
     this.sendCommand = this.sendCommand.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
 
     this.socket.on('connect', () => {
+      console.log(this.room);
       this.socket.emit('room', this.room);
     });
   }

@@ -19,7 +19,7 @@ class WatchSession extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      robotId: this.props.location.pathname.slice(24),
+      robotId: this.props.location.pathname.slice(56),
     };
   }
 
@@ -29,6 +29,7 @@ class WatchSession extends React.Component {
 
   render() {
     const { robot } = this.props.robots;
+    console.log(this.state.robotId);
     if (!robot) return <Loader />;
 
     return (
