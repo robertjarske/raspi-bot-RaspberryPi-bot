@@ -80,10 +80,10 @@ io.on('connection', (socket) => {
   });
   socket.on('disconnect', () => {
     if (socket.id === driver) {
-      Robot.findOneAndUpdate({ _id: robotId },
+      return Robot.findOneAndUpdate({ _id: robotId },
         { isAvailable: true },
         { new: true })
-        .then(updatedRobot => console.log(updatedRobot))
+        .then(updatedRobot => console.log('HERE', updatedRobot))
         .catch(err => console.error(err));
     }
     console.log(`::::User left ${socket.id}::::`);
