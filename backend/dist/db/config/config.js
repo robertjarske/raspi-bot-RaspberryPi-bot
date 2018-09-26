@@ -11,7 +11,7 @@ if (!process.env.PORT) {
 const DATABASE_CONNECTION = process.env.MONGODB_URI || `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.MONGO_DEV_DB}`;
 
 const SECRET = {
-  secret: 'superSecretCat'
+  secret: process.env.SECRET
 };
 
 exports.DATABASE_CONNECTION = DATABASE_CONNECTION;

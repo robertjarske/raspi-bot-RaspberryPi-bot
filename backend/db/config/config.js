@@ -8,7 +8,7 @@ const DATABASE_CONNECTION = process.env.MONGODB_URI || `mongodb://${process.env.
 }@${process.env.MONGO_DEV_DB}`;
 
 const SECRET = {
-  secret: 'superSecretCat',
+  secret: process.env.SECRET,
 };
 
 export { DATABASE_CONNECTION, SECRET };
