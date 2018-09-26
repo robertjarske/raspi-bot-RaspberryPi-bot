@@ -17,6 +17,9 @@ import {
   REQUEST_SEARCH_START,
   REQUEST_SEARCH_SUCCESS,
   REQUEST_SEARCH_FAIL,
+  REQUEST_MAKE_USER_ADMIN_START,
+  REQUEST_MAKE_USER_ADMIN_SUCCESS,
+  REQUEST_MAKE_USER_ADMIN_FAIL,
 } from './constants';
 
 import { curriedApiCall } from '../../utils/apiCall';
@@ -163,6 +166,34 @@ export const requestAdminUserUpdate = userData => (dispatch) => {
   })
     .then(data => dispatch(requestAdminUserUpdateSuccess(data)))
     .catch(err => dispatch(requestAdminUserUpdateFail(err)));
+};
+
+/** Make User Admin */
+
+export const requestMakeUserAdminStart = () => ({ type: REQUEST_MAKE_USER_ADMIN_START });
+
+export const requestMakeUserAdminSuccess = data => ({
+  type: REQUEST_MAKE_USER_ADMIN_SUCCESS,
+  payload: data,
+});
+
+export const requestMakeUserAdminFail = err => ({
+  type: REQUEST_MAKE_USER_ADMIN_FAIL,
+  payload: err,
+});
+
+export const requestMakeUserAdmin = id => (dispatch) => {
+  dispatch(requestMakeUserAdminStart());
+
+  userApiCall(`/${id}/permissions`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem('currentUser'),
+    },
+  })
+    .then(data => dispatch(requestMakeUserAdminSuccess(data)))
+    .catch(err => dispatch(requestMakeUserAdminFail(err)));
 };
 
 

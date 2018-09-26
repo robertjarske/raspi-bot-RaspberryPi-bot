@@ -24,6 +24,9 @@ import {
   REQUEST_SEARCH_START,
   REQUEST_SEARCH_SUCCESS,
   REQUEST_SEARCH_FAIL,
+  REQUEST_MAKE_USER_ADMIN_START,
+  REQUEST_MAKE_USER_ADMIN_SUCCESS,
+  REQUEST_MAKE_USER_ADMIN_FAIL,
 } from './constants';
 
 const initialState = {
@@ -86,6 +89,27 @@ const userReducer = (state = initialState, action) => {
       };
 
     case REQUEST_ADMIN_UPDATE_USER_FAIL:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case REQUEST_MAKE_USER_ADMIN_START:
+      return { ...state, isFetching: true };
+
+    case REQUEST_MAKE_USER_ADMIN_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        users: state.users.map((user) => {
+          if (user._id === action.payload.user._id) {
+            const updatedUser = action.payload.user;
+            return updatedUser;
+          }
+          return user;
+        }),
+      };
+
+    case REQUEST_MAKE_USER_ADMIN_FAIL:
       return {
         ...state,
         isFetching: false,
