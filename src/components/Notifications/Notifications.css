@@ -24,6 +24,26 @@
   left: 2.5rem;
 }
 
+.notification-enter {
+  opacity: 0.01;
+}
+
+.notification-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.notification-exit {
+  opacity: 1;
+  transition: opacity 500ms ease, padding 500ms ease 500ms;
+}
+
+.notification-exit {
+  opacity: 0.01;
+  transition: all 500ms ease-in;
+  padding: 0;
+}
+
 
 @media only screen and (max-width: 1000px) {
   .notifications {
