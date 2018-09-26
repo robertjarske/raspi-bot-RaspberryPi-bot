@@ -105,6 +105,7 @@ io.on('connection', socket => {
     console.log(`::::Recieved from robot ${msg}::::`);
   });
   socket.on('disconnect', () => {
+    console.log(socket);
     console.log(`::::User left ${socket.id}::::`);
   });
 
