@@ -115,7 +115,7 @@ io.on('connection', socket => {
   });
   socket.on('disconnect', () => {
     if (socket.id === driver) {
-      _Robot2.default.findOneAndUpdate({ _id: robotId }, { isAvailable: true }, { new: true }).then(updatedRobot => console.log(updatedRobot)).catch(err => console.error(err));
+      return _Robot2.default.findOneAndUpdate({ _id: robotId }, { isAvailable: true }, { new: true }).then(updatedRobot => console.log('HERE', updatedRobot)).catch(err => console.error(err));
     }
     console.log(`::::User left ${socket.id}::::`);
   });
