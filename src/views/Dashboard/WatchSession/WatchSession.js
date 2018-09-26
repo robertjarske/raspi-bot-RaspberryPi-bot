@@ -28,7 +28,6 @@ class WatchSession extends React.Component {
   }
 
   render() {
-    console.log(this.state.robotId);
     const { robot } = this.props.robots;
     if (!robot) return <Loader />;
 
