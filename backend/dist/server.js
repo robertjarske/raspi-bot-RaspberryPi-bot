@@ -100,6 +100,7 @@ io.on('connection', socket => {
   socket.on('stop-stream', () => {
     console.log('stop-stream');
     io.sockets.in(ns).emit('stop-stream');
+    io.sockets.in(ns).emit('driver-left');
   });
 
   socket.on('command', cmd => {
@@ -113,7 +114,10 @@ io.on('connection', socket => {
     console.log(':::::DRIVER IN DISCONNECT:::::', driver);
     if (socket.id === driver) {
       console.log('::::DRIVER DISCONNECTED:::');
-      return _Robot2.default.findOneAndUpdate({ _id: robotId }, { isAvailable: true }, { new: true }).then(updatedRobot => console.log('HERE', updatedRobot)).catch(err => console.error(err));
+      return _Robot2.default.findOneAndUpdate({ _id: robotId }, { isAvailable: true }, { new: true }).then(updatedRobot => {
+        io.sockets.in(ns).emit('driver-left');
+        console.log('HERE', updatedRobot);
+      }).catch(err => console.error(err));
     }
     console.log(`::::User left ${socket.id}::::`);
     return true;

@@ -68,6 +68,7 @@ io.on('connection', (socket) => {
   socket.on('stop-stream', () => {
     console.log('stop-stream');
     io.sockets.in(ns).emit('stop-stream');
+    io.sockets.in(ns).emit('driver-left');
   });
 
   socket.on('command', (cmd) => {
@@ -84,7 +85,10 @@ io.on('connection', (socket) => {
       return Robot.findOneAndUpdate({ _id: robotId },
         { isAvailable: true },
         { new: true })
-        .then(updatedRobot => console.log('HERE', updatedRobot))
+        .then((updatedRobot) => {
+          io.sockets.in(ns).emit('driver-left');
+          console.log('HERE', updatedRobot);
+        })
         .catch(err => console.error(err));
     }
     console.log(`::::User left ${socket.id}::::`);
