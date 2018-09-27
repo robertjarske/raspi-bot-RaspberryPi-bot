@@ -3,7 +3,6 @@ import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import { requestAlive, requestMakeAvailable, requestRobot } from '../../../redux/robots/actions';
 import { Loader, Stream } from '../../../components';
-import { Button } from '../../../elements';
 import './Session.css';
 
 const mapStateToProps = state => ({
@@ -79,38 +78,29 @@ class Session extends React.Component {
       <div className="session">
           <Stream robot={robot} robotId={robot._id} socket={this.socket}/>
           <div className="session-button-container">
-              <Button
-                appearance="warning forward"
-                type="button"
+            <div className="gamepad-holder">
+              <div
+                className="up"
                 onMouseDown={() => this.sendCommand('forward')}
                 onMouseUp={() => this.sendCommand('stop')}
-              >
-                Forward
-              </Button>
-              <Button
-                appearance="warning backward"
-                type="button"
+                >UP</div>
+              <div
+                className="down"
                 onMouseDown={() => this.sendCommand('backward')}
                 onMouseUp={() => this.sendCommand('stop')}
-              >
-                Backward
-              </Button>
-              <Button
-                appearance="warning left"
-                type="button"
+                >DOWN</div>
+              <div
+                className="left"
                 onMouseDown={() => this.sendCommand('left')}
                 onMouseUp={() => this.sendCommand('stop')}
-              >
-                Left
-              </Button>
-              <Button
-                appearance="warning right"
-                type="button"
+                >LEFT</div>
+              <div
+                className="right"
                 onMouseDown={() => this.sendCommand('right')}
                 onMouseUp={() => this.sendCommand('stop')}
-              >
-                Right
-              </Button>
+                >RIGHT</div>
+              <div className="gamepad"></div>
+            </div>
           </div>
       </div>
     );

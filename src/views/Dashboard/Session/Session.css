@@ -8,72 +8,104 @@
 }
 
 .session-button-container {
-  width: 90%;
-  height: 100vh;
+  width: 15%;
+  height: 25vh;
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 50%;
+  bottom: 0;
+  right: 0;
+  padding-right: 20px;
+}
+
+.gamepad-holder {
   position: absolute;
   display: flex;
   justify-content: center;
-  border-radius: 50%;
-  pointer-events: none;
+  align-items: center;
+  width: 200px;
+  height: 200px;
 }
 
-.forward {
+.gamepad {
+  background: rgba(6, 214, 160, 0.7);
+  border-radius: 500px;
+  width: 200px;
+  height: 200px;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  border: 50px solid black;
+  border-top-color: rgb(255, 209, 102, 0.7);
+  border-left-color: rgb(255, 209, 102, 0.7);
+  border-right-color: rgb(255, 209, 102, 0.7);
+  border-bottom-color: rgb(255, 209, 102, 0.7);
+  box-sizing: border-box;
+}
+
+.up, .down, .left, .right {
+  position: absolute;
+  
+}
+
+.up {
   top: 0;
-  pointer-events: auto;
+  height: 25%;
+  width: 65%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000
 }
 
-.backward {
-  position: absolute;
-  bottom: 15px;
-  pointer-events: auto;
+.up:hover ~ .gamepad {
+  border-top-color: var(--success)
 }
+
+.down:hover ~ .gamepad {
+  border-bottom-color: var(--success)
+}
+
+.left:hover ~ .gamepad {
+  border-left-color: var(--success)
+}
+
+.right:hover ~ .gamepad {
+  border-right-color: var(--success)
+}
+
+.down {
+  bottom: 0;
+  height: 25%;
+  width: 65%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000
+}
+
 .left {
-  position: absolute;
-  left: 15px;
-  top: calc(50% - 47px);
-  pointer-events: auto;
+  left: 0;  
+  height: 50%;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000
 }
+
 .right {
-  position: absolute;
-  right: 15px;
-  top: calc(50% - 47px);
-  pointer-events: auto;
+  right: 0;
+  height: 50%;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1000
 }
-
-@media only screen and (max-width: 1500px) {
-  .session-button-container {
-    width: 80%;
-    height: 90vh;
-  }
-}
-@media only screen and (max-width: 1300px) {
-  .session-button-container {
-    width: 70%;
-    height: 80vh;
-  }
-}
-@media only screen and (max-width: 1200px) {
-  .session-button-container {
-    width: 60%;
-    height: 70vh;
-  }
-}
-
-@media only screen and (max-width: 1000px) {
-  .session-button-container {
-    width: 60%;
-    height: 70vh;
-    align-items: flex-end;
-  }
-
-  .forward, .backward, .left, .right {
-    position: relative;
-    bottom: 0;
-    top: unset;
-    left: unset;
-    right: unset;
-  }
-}
-
-
