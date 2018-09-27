@@ -3,7 +3,7 @@
   flex-direction: column;
   position: fixed;
   width: 30%;
-  height: 100vh;
+  height: 70vh;
   z-index: 10;
   pointer-events: none;
 }
@@ -14,7 +14,7 @@
 
 /* Position */
 .bottomRight {
-  bottom: 0;
+  top: 0;
   justify-content: flex-end;
   right: 2.5rem;
 }
