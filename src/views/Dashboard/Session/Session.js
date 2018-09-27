@@ -83,22 +83,22 @@ class Session extends React.Component {
                 className="up"
                 onMouseDown={() => this.sendCommand('forward')}
                 onMouseUp={() => this.sendCommand('stop')}
-                >UP</div>
+                ><i className="arrow arrow-up"></i></div>
               <div
                 className="down"
                 onMouseDown={() => this.sendCommand('backward')}
                 onMouseUp={() => this.sendCommand('stop')}
-                >DOWN</div>
+                ><i className="arrow arrow-down"></i></div>
               <div
                 className="left"
                 onMouseDown={() => this.sendCommand('left')}
                 onMouseUp={() => this.sendCommand('stop')}
-                >LEFT</div>
+                ><i className="arrow arrow-left"></i></div>
               <div
                 className="right"
                 onMouseDown={() => this.sendCommand('right')}
                 onMouseUp={() => this.sendCommand('stop')}
-                >RIGHT</div>
+                ><i className="arrow arrow-right"></i></div>
               <div className="gamepad"></div>
             </div>
           </div>
