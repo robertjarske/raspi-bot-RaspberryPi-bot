@@ -34,7 +34,6 @@ const LoginWithPublic = withPublicRoot(Login);
 const SignupWithPublic = withPublicRoot(Signup);
 const DeveloperpageWithPublic = withPublicRoot(Developer);
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -53,6 +52,7 @@ class App extends React.Component {
     if (verifyAuth.isLoggedIn()) {
       this.props.requestCurrentUser(localStorage.getItem('currentUser'));
     }
+
     this.props.requestRobots();
 
     if (isMobile.any()) {
