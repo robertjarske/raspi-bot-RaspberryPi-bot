@@ -1,7 +1,9 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { connect } from 'react-redux';
-import { requestAlive, requestMakeAvailable, requestRobot } from '../../../redux/robots/actions';
+import {
+  requestAlive, requestMakeAvailable, requestRobot, requestClear,
+} from '../../../redux/robots/actions';
 import { Loader, Stream, Modal } from '../../../components';
 import './WatchSession.css';
 
@@ -14,6 +16,7 @@ const mapDispatchToProps = dispatch => ({
   requestAlive: robot => dispatch(requestAlive(robot)),
   requestMakeAvailable: id => dispatch(requestMakeAvailable(id)),
   requestRobot: id => dispatch(requestRobot(id)),
+  requestClear: () => dispatch(requestClear()),
 });
 
 class WatchSession extends React.Component {
@@ -28,6 +31,10 @@ class WatchSession extends React.Component {
     this.socket = io(`${process.env.REACT_APP_API_URL}`);
     this.room = this.props.location.pathname.slice(24);
     this.toggleModal = this.toggleModal.bind(this);
+
+    this.socket.on('connect', () => {
+      this.socket.emit('room', this.room);
+    });
   }
 
   componentDidMount() {
@@ -40,6 +47,10 @@ class WatchSession extends React.Component {
         modalOpen: !this.state.modalOpen,
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.props.requestClear();
   }
 
   render() {
@@ -58,7 +69,8 @@ class WatchSession extends React.Component {
       <div className="session">
         {streamEnded && modalOpen
           ? <Modal closeModal={this.toggleModal}>
-            <h1>SHIIIIIET Stream ended jao</h1>
+            <h3>Seems like the stream has ended....</h3>
+            <p>Go do something else!</p>
           </Modal>
           : <Stream robot={robot} robotId={robot._id} socket={this.socket}/>
         }

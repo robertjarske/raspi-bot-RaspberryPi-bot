@@ -19,6 +19,7 @@ class Stream extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log(prevProps);
     if (!prevProps.robot.streamUrl) {
       return this.props.requestRobot(this.props.robot._id);
     }

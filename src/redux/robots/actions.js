@@ -11,6 +11,7 @@ import {
   REQUEST_UPDATE_ROBOT_START,
   REQUEST_UPDATE_ROBOT_SUCCESS,
   REQUEST_UPDATE_ROBOT_FAIL,
+  REQUEST_CLEAR_ROBOT,
 } from './constants';
 
 import { curriedApiCall } from '../../utils/apiCall';
@@ -148,4 +149,13 @@ export const requestMakeAvailable = id => (dispatch) => {
   })
     .then(res => dispatch(requestMakeAvailableSuccess(res)))
     .catch(err => dispatch(requestMakeAvailableSuccess(err)));
+};
+
+export const requestClearRobot = () => ({
+  type: REQUEST_CLEAR_ROBOT,
+
+});
+
+export const requestClear = () => (dispatch) => {
+  dispatch(requestClearRobot());
 };

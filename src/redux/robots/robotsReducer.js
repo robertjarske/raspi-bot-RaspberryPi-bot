@@ -11,6 +11,7 @@ import {
   REQUEST_UPDATE_ROBOT_START,
   REQUEST_UPDATE_ROBOT_SUCCESS,
   REQUEST_UPDATE_ROBOT_FAIL,
+  REQUEST_CLEAR_ROBOT,
 } from './constants';
 
 const initialState = {
@@ -82,6 +83,11 @@ const robotsReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+      };
+    case REQUEST_CLEAR_ROBOT:
+      return {
+        ...state,
+        robot: [],
       };
 
     default:
