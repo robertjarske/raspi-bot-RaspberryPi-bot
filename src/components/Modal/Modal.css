@@ -40,9 +40,3 @@
     min-width: 300px;
   }
 }
-
-@media only screen and (max-width: 450px) {
-  .modal {
-    width: 250px;
-  }
-}
