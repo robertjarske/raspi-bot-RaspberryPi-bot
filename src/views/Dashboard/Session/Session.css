@@ -30,14 +30,14 @@
 }
 
 .gamepad {
-  background: rgba(6, 214, 160, 0.7);
+  background: rgba(6, 214, 160, 0.5);
   border-radius: 500px;
   width: 200px;
   height: 200px;
   position: absolute;
   display: flex;
   justify-content: center;
-  border: 50px solid rgba(255, 209, 102, 0.7);
+  border: 50px solid rgba(255, 209, 102, 0.5);
   box-sizing: border-box;
 }
 
