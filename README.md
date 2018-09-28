@@ -1,4 +1,5 @@
-# u14-fullstackjs-idea
+# u14-fullstackjs-idea 
+## Deployed @ https://rjenodebot.herokuapp.com
 
 Fullstack school project, the idea is to build a nodebot using a Raspberry Pi, hooking it up with a camera for live video.
 
