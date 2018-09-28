@@ -31,10 +31,12 @@ router.get('/:robotId', tokenVerify, (req, res) => {
 /** Register new robot */
 router.post('/', tokenVerify, (req, res) => {
   const { user } = req;
-  const { name, ip } = req.body;
+  const { name, url } = req.body;
 
   if (!user.admin) return res.status(404).send({ msgType: 'danger', msg: 'You are not allowed to do that' });
-  return Robot.create({ name, url: ip })
+  return Robot.create({
+    name, url, isOnline: false, isAvailable: true,
+  })
     .then(newRobot => res.status(200).send({ msgType: 'success', msg: 'You successfully added a new robot', robot: newRobot }))
     .catch(e => res.status(500).send({ msg: e }));
 });
