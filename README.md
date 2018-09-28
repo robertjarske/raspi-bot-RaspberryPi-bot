@@ -25,7 +25,7 @@ Fullstack school project, the idea is to build a nodebot using a Raspberry Pi, h
 - https://www.hackster.io/IainIsCreative/setting-up-the-raspberry-pi-and-johnny-five-56d60f
 - https://www.robotshop.com/forum/node-js-johnny-five-raspberry-pi-3-t15029
 - https://pimylifeup.com/raspberry-pi-webcam-server/
-- https://github.com/simonmonk/raspirobotboard3/blob/master/python/rrb3.py IMPORTANT!
+- https://github.com/simonmonk/raspirobotboard3/blob/master/python/rrb3.py
 - http://pagekite.net/
 - https://localtunnel.github.io/www/
 
