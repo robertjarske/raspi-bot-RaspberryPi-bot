@@ -15,6 +15,7 @@ Base | Sub | Type | Permission | Description
 `/users` | `/:userId` | `DELETE` | Admin | Deletes the user, requires token
 `/users` | `/search` | `POST` | Admin | Returns users matching the query, search can be made for name, username or email, requires token
 `/robots` | `/` | `GET` | Any | Returns all robots, requires token
+`/robots` | `/:robotId` | `GET` | Any | Returns specific robot, requires token
 `/robots` | `/` | `POST` | Admin | Register a new robot
 `/robots` | `/:robotId` | `PUT` | Admin | Updates robot
 `/robots` | `/:robotId` | `DELETE` | Admin | Deletes robot
