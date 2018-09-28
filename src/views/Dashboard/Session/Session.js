@@ -81,21 +81,29 @@ class Session extends React.Component {
             <div className="gamepad-holder">
               <div
                 className="up"
+                onTouchStart={() => this.sendCommand('forward')}
+                onTouchEnd={() => this.sendCommand('stop')}
                 onMouseDown={() => this.sendCommand('forward')}
                 onMouseUp={() => this.sendCommand('stop')}
                 ><i className="arrow arrow-up"></i></div>
               <div
                 className="down"
+                onTouchStart={() => this.sendCommand('backward')}
+                onTouchEnd={() => this.sendCommand('stop')}
                 onMouseDown={() => this.sendCommand('backward')}
                 onMouseUp={() => this.sendCommand('stop')}
                 ><i className="arrow arrow-down"></i></div>
               <div
                 className="left"
+                onTouchStart={() => this.sendCommand('left')}
+                onTouchEnd={() => this.sendCommand('stop')}
                 onMouseDown={() => this.sendCommand('left')}
                 onMouseUp={() => this.sendCommand('stop')}
                 ><i className="arrow arrow-left"></i></div>
               <div
                 className="right"
+                onTouchStart={() => this.sendCommand('right')}
+                onTouchEnd={() => this.sendCommand('stop')}
                 onMouseDown={() => this.sendCommand('right')}
                 onMouseUp={() => this.sendCommand('stop')}
                 ><i className="arrow arrow-right"></i></div>
