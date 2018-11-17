@@ -1,5 +1,5 @@
 # u14-fullstackjs-idea 
-## Deployed @ https://rjenodebot.herokuapp.com, admin: rob@test.com, password
+## Deployed @ https://rjenodebot.herokuapp.com
 
 
 Fullstack school project, the idea is to build a nodebot using a Raspberry Pi, hooking it up with a camera for live video.
@@ -29,20 +29,3 @@ Fullstack school project, the idea is to build a nodebot using a Raspberry Pi, h
 - https://github.com/simonmonk/raspirobotboard3/blob/master/python/rrb3.py
 - http://pagekite.net/
 - https://localtunnel.github.io/www/
-
-### Initial Camera Setup
-
-`sudo apt-get install build-essential libjpeg8-dev imagemagick libv4l-dev cmake -y`
-
-Camera is running MJPG Streamer Experimental (https://github.com/jacksonliam/mjpg-streamer)
-
-## Initial Camera Running Options
-
-`./mjpg_streamer -i "./input_raspicam.so -vf -fps 25 -x 1280 -y 960 -ex antishake" -o "./output_http.so -n -w ./www"`
-
-More options can be found at: https://discourse.octoprint.org/t/available-mjpg-streamer-configuration-options/1106
-
-### Start
-
-From backend root folder run
-`./start.sh`
